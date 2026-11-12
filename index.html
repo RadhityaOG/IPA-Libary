@@ -7,18 +7,18 @@
     <meta name="description" content="One master repository link combining dozens of community sources for ESign, Scarlet, AltStore, SideStore, and more.">
     <style>
         /* ==========================================================================
-           ROOT VARIABLES (DARK & LIGHT THEME)
+           ROOT VARIABLES (DARK NAVY & LIGHT THEME)
            ========================================================================== */
         :root[data-theme="dark"] {
-            --bg: #000000;
-            --nav-bg: rgba(0, 0, 0, 0.75);
-            --surface: #111111;
-            --surface-elevated: #1c1c1e;
+            --bg: #0B101E; /* Dark Navy Background */
+            --nav-bg: rgba(11, 16, 30, 0.75);
+            --surface: #151B2B; /* Navy Elevated */
+            --surface-elevated: #1F293D;
             --text-primary: #f5f5f7;
-            --text-secondary: #86868b;
+            --text-secondary: #94a3b8;
             --border: rgba(255, 255, 255, 0.1);
-            --border-hover: rgba(255, 255, 255, 0.3);
-            --accent: #2997ff;
+            --border-hover: rgba(255, 255, 255, 0.25);
+            --accent: #3b82f6;
         }
 
         :root[data-theme="light"] {
@@ -70,13 +70,13 @@
         /* ==========================================================================
            HERO SECTION
            ========================================================================== */
-        .hero { padding: 180px 20px 80px; text-align: center; max-width: 1040px; margin: 0 auto; }
+        .hero { padding: 160px 20px 60px; text-align: center; max-width: 1040px; margin: 0 auto; }
         .hero-badge {
             display: inline-block; padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
             font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 24px; background: var(--surface);
         }
-        .hero h1 { font-size: clamp(36px, 5.5vw, 60px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 20px; }
-        .hero p { font-size: clamp(16px, 1.8vw, 19px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.6; color: var(--text-secondary); max-width: 650px; margin: 0 auto 40px; }
+        .hero h1 { font-size: clamp(32px, 5.5vw, 60px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 20px; }
+        .hero p { font-size: clamp(15px, 1.8vw, 19px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.6; color: var(--text-secondary); max-width: 650px; margin: 0 auto 40px; }
         .hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
         
         .btn {
@@ -90,17 +90,17 @@
         .btn-secondary:hover { opacity: 0.8; }
 
         /* ==========================================================================
-           INFINITE MARQUEE (APP SHOWCASE)
+           INFINITE MARQUEE (APP SHOWCASE) - COLORS RESTORED
            ========================================================================== */
         .marquee-container {
-            width: 100%; overflow: hidden; padding: 30px 0; background: var(--bg);
+            width: 100%; overflow: hidden; padding: 20px 0 40px; background: var(--bg);
             mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
         .marquee-content { display: flex; width: max-content; animation: scroll 30s linear infinite; gap: 40px; padding-left: 40px; }
-        .marquee-item { display: flex; align-items: center; gap: 12px; filter: grayscale(100%) opacity(0.6); transition: 0.3s; }
-        .marquee-item:hover { filter: grayscale(0%) opacity(1); }
-        .marquee-item img { width: 30px; height: 30px; border-radius: 8px; background: #fff; }
+        .marquee-item { display: flex; align-items: center; gap: 12px; opacity: 0.85; transition: 0.3s; }
+        .marquee-item:hover { opacity: 1; transform: scale(1.05); }
+        .marquee-item img { width: 30px; height: 30px; border-radius: 8px; background: #fff; padding: 2px; }
         .marquee-item span { font-size: 15px; font-weight: 600; color: var(--text-primary); }
         
         @keyframes scroll {
@@ -111,8 +111,8 @@
         /* ==========================================================================
            BENTO GRID
            ========================================================================== */
-        .section-wrapper { max-width: 980px; margin: 0 auto; padding: 80px 20px; }
-        .section-title { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 40px; text-align: center; }
+        .section-wrapper { max-width: 980px; margin: 0 auto; padding: 60px 20px; }
+        .section-title { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 30px; text-align: center; }
         
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .bento-card {
@@ -129,9 +129,14 @@
         .bento-title { font-size: 19px; font-weight: 600; margin-bottom: 10px; line-height: 1.2; }
         .bento-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
 
+        /* Mobile specific spacing fixes */
         @media (max-width: 768px) {
-            .bento-grid { grid-template-columns: 1fr; }
+            .hero { padding: 130px 20px 40px; }
+            .section-wrapper { padding: 40px 20px; }
+            .section-title { margin-bottom: 24px; }
+            .bento-grid { grid-template-columns: 1fr; gap: 16px; }
             .card-wide, .card-tall { grid-column: span 1; grid-row: span 1; }
+            .bento-card { padding: 24px; }
         }
 
         /* ==========================================================================
@@ -139,7 +144,7 @@
            ========================================================================== */
         .tabs-container {
             background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 8px;
-            margin-bottom: 40px; transition: background 0.4s, border-color 0.4s;
+            margin-bottom: 20px; transition: background 0.4s, border-color 0.4s;
         }
         .tabs-header { display: flex; gap: 8px; overflow-x: auto; border-bottom: 1px solid var(--border); padding: 16px; scrollbar-width: none; }
         .tabs-header::-webkit-scrollbar { display: none; }
@@ -150,10 +155,11 @@
         }
         .tab-btn.active { background: var(--surface-elevated); color: var(--text-primary); }
         
-        .tab-content { display: none; padding: 32px; animation: fadeIn 0.4s ease; }
+        .tab-content { display: none; padding: 32px 24px; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         .step-list { list-style: none; counter-reset: steps; }
         .step-list li { position: relative; padding-left: 48px; margin-bottom: 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+        .step-list li:last-child { margin-bottom: 0; }
         .step-list li::before {
             counter-increment: steps; content: counter(steps); position: absolute; left: 0; top: -2px;
             width: 26px; height: 26px; border-radius: 50%; background: var(--surface-elevated); color: var(--text-primary);
@@ -171,7 +177,7 @@
         .faq-btn {
             width: 100%; background: transparent; border: none; padding: 22px 0; text-align: left;
             display: flex; justify-content: space-between; align-items: center; cursor: pointer;
-            font-size: 17px; font-weight: 500; color: var(--text-primary); transition: opacity 0.2s;
+            font-size: 16px; font-weight: 500; color: var(--text-primary); transition: opacity 0.2s;
         }
         .faq-btn:hover { opacity: 0.8; }
         .faq-icon { font-size: 22px; font-weight: 300; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -308,7 +314,7 @@
 
             <!-- Small Card 2 -->
             <div class="bento-card reveal">
-                <div class="bento-icon" style="color: var(--accent); margin-bottom: 20px;">
+                <div class="bento-icon" style="color: var(--accent); margin-bottom: 16px;">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                     </svg>
