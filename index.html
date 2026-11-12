@@ -3,391 +3,412 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GHN | Universal IPA Library</title>
-    <meta name="description" content="Clean and automated iOS IPA repository for your favorite sideloading tools.">
+    <title>GHN Library | The Ultimate iOS Sideloading Source</title>
+    <meta name="description" content="A premium, automated iOS IPA repository for AltStore, ESign, Scarlet, K-Sign, and more.">
     <style>
+        /* ==========================================================================
+           ROOT VARIABLES (APPLE DARK MODE THEME)
+           ========================================================================== */
         :root {
-            --bg: #050505;
-            --surface: #121212;
-            --surface-hover: #1a1a1a;
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
+            --bg: #000000;
+            --surface: #111111;
+            --surface-elevated: #1c1c1e;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
             --border: rgba(255, 255, 255, 0.1);
-            --accent: #ffffff;
-            --glow: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(255, 255, 255, 0.3);
+            --accent: #2997ff;
+            --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, sans-serif; }
-        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-family); }
+        html { scroll-behavior: smooth; background-color: var(--bg); }
+        body { color: var(--text-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-        body {
-            background-color: var(--bg); color: var(--text-main); overflow-x: hidden;
-            display: flex; flex-direction: column; align-items: center;
-        }
-
-        /* Subtle Background Pattern */
-        .bg-pattern {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-            background-size: 32px 32px; z-index: -1;
-            mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
-        }
-
-        /* Floating Navbar (Responsive & Minimalist) */
+        /* ==========================================================================
+           APPLE-STYLE STICKY NAVBAR
+           ========================================================================== */
         .navbar {
-            position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 100;
-            background: rgba(18, 18, 18, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 50px;
-            padding: 0.5rem 0.5rem 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem;
-            width: 90%; max-width: 700px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            animation: slideDownFade 1s cubic-bezier(0.16, 1, 0.3, 1);
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            background: rgba(0, 0, 0, 0.75); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: center; height: 56px;
         }
+        .nav-content {
+            width: 100%; max-width: 980px; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-primary); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
+        .nav-logo img { width: 24px; height: 24px; border-radius: 50%; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 400; transition: color 0.2s; letter-spacing: 0.5px; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .lang-btn { background: transparent; color: var(--text-secondary); border: 1px solid var(--text-secondary); padding: 4px 10px; border-radius: 12px; font-size: 11px; cursor: pointer; transition: 0.2s; }
+        .lang-btn:hover { color: var(--text-primary); border-color: var(--text-primary); }
 
-        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1.1rem; }
-        .nav-logo img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+        /* ==========================================================================
+           HERO SECTION (CLEAN & CENTERED)
+           ========================================================================== */
+        .hero {
+            padding: 180px 20px 80px; text-align: center; max-width: 1040px; margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-block; padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
+            font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 24px;
+        }
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 64px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.05; margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: clamp(17px, 2vw, 21px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.5; color: var(--text-secondary); max-width: 600px; margin: 0 auto 40px;
+        }
+        .hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
         
-        .nav-links { display: flex; align-items: center; gap: 0.5rem; }
-        .nav-links a {
-            color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500;
-            padding: 0.6rem 1.2rem; border-radius: 20px; transition: all 0.3s ease;
-        }
-        .nav-links a:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.08); }
-
-        .lang-btn {
-            background: var(--text-main); color: var(--bg); border: none; padding: 0.6rem 1.2rem;
-            border-radius: 20px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: transform 0.2s;
-        }
-        .lang-btn:active { transform: scale(0.9); }
-
-        /* Main Container */
-        .main-content {
-            width: 100%; max-width: 900px; padding: 160px 1.5rem 6rem 1.5rem;
-            display: flex; flex-direction: column; gap: 8rem; /* Jarak antar seksi bikin web kerasa panjang & elegan */
-        }
-
-        /* Hero Section */
-        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .badge {
-            padding: 8px 18px; border-radius: 30px; border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.03); color: var(--text-muted); font-size: 0.75rem; font-weight: 600;
-            letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2.5rem;
-            box-shadow: 0 0 20px var(--glow);
-        }
-        h1 { font-size: clamp(3rem, 7vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 1.5rem; }
-        p.subtitle { color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; max-width: 600px; margin: 0 auto 3rem auto; }
-
-        .actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; width: 100%; }
         .btn {
-            padding: 1rem 1.8rem; border-radius: 14px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            text-decoration: none; min-width: 200px;
+            display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 24px;
+            font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; transition: transform 0.2s, background 0.2s;
         }
-        .btn-primary { background: var(--text-main); color: var(--bg); border: none; }
-        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2); }
-        .btn-primary:active { transform: scale(0.95); }
-        .btn-outline { background: rgba(255,255,255,0.02); color: var(--text-main); border: 1px solid var(--border); backdrop-filter: blur(10px); }
-        .btn-outline:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+        .btn:active { transform: scale(0.96); }
+        .btn-primary { background: var(--text-primary); color: var(--bg); border: none; }
+        .btn-primary:hover { background: #e0e0e0; }
+        .btn-secondary { background: var(--surface-elevated); color: var(--text-primary); border: none; }
+        .btn-secondary:hover { background: #2c2c2e; }
 
-        /* Scroll Reveal Global Class (Ini Rahasia Animasi Scroll Smooth) */
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* ==========================================================================
+           INFINITE MARQUEE (APP SUPPORT SHOWCASE)
+           ========================================================================== */
+        .marquee-container {
+            width: 100%; overflow: hidden; padding: 40px 0; background: var(--bg);
+            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+        }
+        .marquee-content {
+            display: flex; width: max-content; animation: scroll 30s linear infinite; gap: 40px; padding-left: 40px;
+        }
+        .marquee-item {
+            display: flex; align-items: center; gap: 12px; filter: grayscale(100%) opacity(0.6); transition: 0.3s;
+        }
+        .marquee-item:hover { filter: grayscale(0%) opacity(1); }
+        .marquee-item img { width: 32px; height: 32px; border-radius: 8px; background: #fff; }
+        .marquee-item span { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Scrolls exactly half the duplicated content */
+        }
+
+        /* ==========================================================================
+           BENTO GRID (FEATURES SECTION)
+           ========================================================================== */
+        .section-wrapper { max-width: 980px; margin: 0 auto; padding: 80px 20px; }
+        .section-title { font-size: 32px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 40px; text-align: center; }
+        
+        .bento-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .bento-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 32px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.3s ease, border-color 0.3s; overflow: hidden; position: relative;
+        }
+        .bento-card:hover { transform: scale(1.02); border-color: var(--border-hover); }
+        
+        /* Grid spans for asymetric Apple-style layout */
+        .card-wide { grid-column: span 2; }
+        .card-tall { grid-row: span 2; }
+
+        .bento-icon { font-size: 32px; margin-bottom: 20px; color: var(--text-primary); }
+        .bento-stat { font-size: 48px; font-weight: 700; letter-spacing: -1px; margin-bottom: 8px; }
+        .bento-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; line-height: 1.2; }
+        .bento-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .card-wide, .card-tall { grid-column: span 1; grid-row: span 1; }
+        }
+
+        /* ==========================================================================
+           INTERACTIVE TABS (INSTALLATION GUIDE)
+           ========================================================================== */
+        .tabs-container {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 8px;
+            margin-bottom: 40px;
+        }
+        .tabs-header { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; border-bottom: 1px solid var(--border); padding: 16px; scrollbar-width: none; }
+        .tabs-header::-webkit-scrollbar { display: none; }
+        
+        .tab-btn {
+            background: transparent; color: var(--text-secondary); border: none; padding: 10px 20px; border-radius: 16px;
+            font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.3s; white-space: nowrap;
+        }
+        .tab-btn.active { background: var(--surface-elevated); color: var(--text-primary); }
+        
+        .tab-content { display: none; padding: 32px; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        .step-list { list-style: none; counter-reset: steps; }
+        .step-list li {
+            position: relative; padding-left: 48px; margin-bottom: 24px; font-size: 15px; color: var(--text-secondary); line-height: 1.5;
+        }
+        .step-list li::before {
+            counter-increment: steps; content: counter(steps); position: absolute; left: 0; top: -2px;
+            width: 28px; height: 28px; border-radius: 50%; background: var(--surface-elevated); color: var(--text-primary);
+            display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: 600;
+        }
+        .step-list li strong { color: var(--text-primary); font-weight: 600; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ==========================================================================
+           MINIMALIST FAQ ACCORDION
+           ========================================================================== */
+        .faq-wrap { border-top: 1px solid var(--border); }
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-btn {
+            width: 100%; background: transparent; border: none; padding: 24px 0; text-align: left;
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer;
+            font-size: 18px; font-weight: 500; color: var(--text-primary); transition: opacity 0.2s;
+        }
+        .faq-btn:hover { opacity: 0.8; }
+        .faq-icon {
+            font-size: 24px; font-weight: 300; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .faq-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .faq-text { padding-bottom: 24px; color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-item.open .faq-content { max-height: 200px; }
+
+        /* ==========================================================================
+           GLOBAL UTILITIES & FOOTER
+           ========================================================================== */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-
-        /* Stats Counter (Interactive) */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
-        .stat-item { padding: 2.5rem 1.5rem; border-radius: 20px; border: 1px solid var(--border); background: linear-gradient(180deg, var(--surface) 0%, transparent 100%); }
-        .stat-num { font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main); letter-spacing: -2px; }
-        .stat-label { color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* Section Header */
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -1px; }
-        .section-header p { color: var(--text-muted); max-width: 550px; margin: 0 auto; line-height: 1.6; font-size: 1.05rem; }
-
-        /* Workflow / Cara Kerja (1, 2, 3) */
-        .workflow { display: flex; flex-direction: column; gap: 2.5rem; position: relative; max-width: 700px; margin: 0 auto; }
-        .workflow::before {
-            content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent); z-index: -1;
-        }
-        .workflow-step { display: flex; gap: 2rem; align-items: flex-start; }
-        .step-dot {
-            width: 50px; height: 50px; border-radius: 50%; background: var(--bg);
-            border: 2px solid var(--text-main); display: flex; justify-content: center; align-items: center;
-            font-weight: 700; color: var(--text-main); flex-shrink: 0; font-size: 1.2rem;
-        }
-        .step-content {
-            background: var(--surface); border: 1px solid var(--border); padding: 1.8rem;
-            border-radius: 20px; flex: 1; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .step-content:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.2); transform: translateX(8px); }
-        .step-content h3 { font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 600; }
-        .step-content p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
-
-        /* Supported Apps Grid */
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .card {
-            background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
-        }
-        .card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.2); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-        .card h3 { font-size: 1.35rem; margin-bottom: 1rem; }
-        .card p { color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; }
-
-        /* App Links / Pills */
-        .app-links { display: flex; flex-wrap: wrap; gap: 12px; }
-        .app-pill {
-            display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border); padding: 8px 16px 8px 8px; border-radius: 30px;
-            color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: all 0.3s;
-        }
-        .app-pill img { width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 1px solid rgba(255,255,255,0.2); }
-        .app-pill:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: rgba(255,255,255,0.3); transform: scale(1.05); }
-
-        /* FAQ Accordion */
-        .faq-wrap { display: flex; flex-direction: column; gap: 1rem; max-width: 800px; margin: 0 auto; width: 100%; }
-        .faq-item { border: 1px solid var(--border); border-radius: 20px; background: var(--surface); overflow: hidden; cursor: pointer; transition: all 0.3s; }
-        .faq-item:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.15); }
-        .faq-q { padding: 1.5rem 2rem; font-weight: 600; font-size: 1.05rem; display: flex; justify-content: space-between; align-items: center; }
-        .faq-icon { font-size: 1.5rem; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: var(--text-muted); }
-        .faq-a { padding: 0 2rem; max-height: 0; opacity: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .faq-item.open .faq-a { padding: 0 2rem 1.5rem 2rem; max-height: 250px; opacity: 1; }
-        .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--text-main); }
-
-        /* Footer */
-        footer {
-            margin-top: auto; padding: 4rem 1.5rem; text-align: center; border-top: 1px solid var(--border);
-            width: 100%; color: var(--text-muted); font-size: 0.9rem; background: linear-gradient(to top, rgba(18,18,18,0.5), transparent);
-        }
-
-        /* Toast */
+        
         .toast {
-            position: fixed; bottom: 2.5rem; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: var(--text-main); color: var(--bg); padding: 14px 28px; border-radius: 30px;
-            font-size: 0.95rem; font-weight: 600; opacity: 0; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: rgba(255,255,255,0.9); color: #000; padding: 12px 24px; border-radius: 30px;
+            font-size: 14px; font-weight: 600; opacity: 0; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
         }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-        /* Animations */
-        @keyframes slideDownFade { from { opacity: 0; transform: translate(-50%, -40px); } to { opacity: 1; transform: translate(-50%, 0); } }
-
-        /* Responsiveness adjustments */
-        @media (max-width: 768px) {
-            .nav-links a { display: none; } /* Hide text links on mobile, keep logo and ID/EN */
-            .navbar { width: 85%; padding: 0.5rem 0.5rem 0.5rem 1rem; }
-            .workflow::before { left: 20px; }
-            .step-dot { width: 40px; height: 40px; font-size: 1rem; }
-            .workflow-step { gap: 1rem; }
-            .stat-num { font-size: 2.8rem; }
+        footer {
+            border-top: 1px solid var(--border); padding: 40px 20px; text-align: center;
+            font-size: 12px; color: var(--text-secondary); max-width: 980px; margin: 0 auto;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-pattern"></div>
-
-    <!-- Floating Minimalist Navbar -->
+    <!-- STICKY NAVBAR -->
     <nav class="navbar">
-        <a href="#home" class="nav-logo">
-            <img src="IMG_6762.jpeg" alt="Logo">
-            GHN
-        </a>
-        <div class="nav-links">
-            <a href="#workflow" data-en="Workflow" data-id="Sistem">Workflow</a>
-            <a href="#apps" data-en="Integrations" data-id="Integrasi">Integrations</a>
-            <a href="#faq" data-en="FAQ" data-id="FAQ">FAQ</a>
-            <button class="lang-btn" onclick="toggleLang()" id="langToggle">ID</button>
+        <div class="nav-content">
+            <a href="#home" class="nav-logo">
+                <img src="IMG_6762.jpeg" alt="Logo">
+                GHN
+            </a>
+            <div class="nav-links">
+                <a href="#features" data-en="Features" data-id="Fitur">Features</a>
+                <a href="#install" data-en="Setup Guide" data-id="Panduan Pemasangan">Setup Guide</a>
+                <a href="#faq" data-en="FAQ" data-id="FAQ">FAQ</a>
+                <button class="lang-btn" onclick="toggleLang()" id="langToggle">ID</button>
+            </div>
         </div>
     </nav>
 
-    <main class="main-content">
-        
-        <!-- Hero Section -->
-        <section class="hero reveal active" id="home">
-            <div class="badge" data-en="Verified Source Repository" data-id="Repositori Sumber Terverifikasi">Verified Source Repository</div>
-            <h1 data-en="Universal IPA Library." data-id="Pustaka IPA Universal.">Universal IPA Library.</h1>
-            <p class="subtitle" data-en="A clean, auto-updating iOS app repository designed to integrate flawlessly with your favorite sideloading apps." data-id="Repositori aplikasi iOS bersih dan otomatis yang dirancang untuk terintegrasi sempurna dengan aplikasi sideloading favorit Anda.">
-                A clean, auto-updating iOS app repository designed to integrate flawlessly with your favorite sideloading apps.
-            </p>
-            
-            <div class="actions">
-                <button class="btn btn-primary" onclick="copyURL()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span data-en="Copy Source URL" data-id="Salin URL Repositori">Copy Source URL</span>
-                </button>
-                <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank" class="btn btn-outline">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                    <span data-en="View GitHub" data-id="Lihat di GitHub">View GitHub</span>
-                </a>
-            </div>
-        </section>
-
-        <!-- Stats Counter (Animated via JS) -->
-        <section class="stats-grid">
-            <div class="stat-item reveal delay-1">
-                <div class="stat-num" data-target="58">0</div>
-                <div class="stat-label" data-en="Sources Merged" data-id="Sumber Digabung">Sources Merged</div>
-            </div>
-            <div class="stat-item reveal delay-2">
-                <div class="stat-num" data-target="1200">0</div>
-                <div class="stat-label" data-en="Available Apps (Est)" data-id="Estimasi Aplikasi">Available Apps (Est)</div>
-            </div>
-            <div class="stat-item reveal delay-3">
-                <div class="stat-num" data-target="24">0</div>
-                <div class="stat-label" data-en="Hour Auto-Sync" data-id="Jam Sinkronisasi">Hour Auto-Sync</div>
-            </div>
-        </section>
-
-        <!-- Workflow / 1-2-3 Architecture -->
-        <section id="workflow">
-            <div class="section-header reveal">
-                <h2 data-en="How it works." data-id="Cara kerja sistem.">How it works.</h2>
-                <p data-en="A fully automated pipeline ensures you always have the latest app versions." data-id="Sistem otomatis memastikan Anda selalu mendapatkan versi aplikasi terbaru tanpa jeda.">
-                    A fully automated pipeline ensures you always have the latest app versions.
-                </p>
-            </div>
-            <div class="workflow">
-                <div class="workflow-step reveal delay-1">
-                    <div class="step-dot">1</div>
-                    <div class="step-content">
-                        <h3 data-en="Data Extraction" data-id="Ekstraksi Data">Data Extraction</h3>
-                        <p data-en="Custom Python scripts safely extract raw IPA data from dozens of verified community repositories." data-id="Skrip Python khusus dengan aman mengekstrak data IPA mentah dari puluhan repositori komunitas terverifikasi.">Custom Python scripts safely extract raw IPA data from dozens of verified community repositories.</p>
-                    </div>
-                </div>
-                <div class="workflow-step reveal delay-2">
-                    <div class="step-dot">2</div>
-                    <div class="step-content">
-                        <h3 data-en="Automated Merging" data-id="Penggabungan Otomatis">Automated Merging</h3>
-                        <p data-en="GitHub Actions trigger every 24 hours to deduplicate, clean, and merge the data into a single file." data-id="GitHub Actions berjalan otomatis setiap 24 jam untuk membersihkan dan menggabungkan data menjadi satu file tunggal.">GitHub Actions trigger every 24 hours to deduplicate, clean, and merge the data into a single file.</p>
-                    </div>
-                </div>
-                <div class="workflow-step reveal delay-3">
-                    <div class="step-dot">3</div>
-                    <div class="step-content">
-                        <h3 data-en="Global Delivery" data-id="Distribusi Global">Global Delivery</h3>
-                        <p data-en="Hosted on GitHub Pages, the final feed is distributed globally for lightning-fast loading in your apps." data-id="Di-hosting pada GitHub Pages, feed akhir didistribusikan secara global agar dimuat sangat cepat di aplikasi Anda.">Hosted on GitHub Pages, the final feed is distributed globally for lightning-fast loading in your apps.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features & Supported Apps Grid -->
-        <section id="apps">
-            <div class="section-header reveal">
-                <h2 data-en="Universal Integration." data-id="Integrasi Universal.">Universal Integration.</h2>
-                <p data-en="One source link formatted perfectly for modern signers." data-id="Satu tautan sumber yang diformat sempurna untuk alat sideloading modern.">
-                    One source link formatted perfectly for modern signers.
-                </p>
-            </div>
-            <div class="card-grid">
-                
-                <div class="card reveal delay-1">
-                    <h3 data-en="Primary Signers" data-id="Alat Utama">Primary Signers</h3>
-                    <p data-en="Paste the source link directly into any of these tools to start installing apps instantly." data-id="Tempelkan tautan sumber langsung ke salah satu alat ini untuk mulai menginstal aplikasi.">
-                        Paste the source link directly into any of these tools to start installing apps instantly.
-                    </p>
-                    <div class="app-links">
-                        <a href="https://sidestore.io/" target="_blank" class="app-pill">
-                            <img src="https://www.google.com/s2/favicons?domain=sidestore.io&sz=64" alt="SideStore"> SideStore
-                        </a>
-                        <a href="https://altstore.io/" target="_blank" class="app-pill">
-                            <img src="https://www.google.com/s2/favicons?domain=altstore.io&sz=64" alt="AltStore"> AltStore
-                        </a>
-                        <a href="https://github.com/khcrysalis/Feather" target="_blank" class="app-pill">
-                            <img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="Feather"> Feather
-                        </a>
-                    </div>
-                </div>
-
-                <div class="card reveal delay-2">
-                    <h3 data-en="On-Device Tools" data-id="Alat On-Device">On-Device Tools</h3>
-                    <p data-en="Perfectly structured for on-device signing tools requiring no computer access." data-id="Diformat sempurna untuk alat penandatanganan on-device tanpa memerlukan akses komputer.">
-                        Perfectly structured for on-device signing tools requiring no computer access.
-                    </p>
-                    <div class="app-links">
-                        <a href="https://esign.yyyue.xyz/" target="_blank" class="app-pill">
-                            <img src="https://www.google.com/s2/favicons?domain=esign.yyyue.xyz&sz=64" alt="ESign"> ESign
-                        </a>
-                        <a href="https://usescarlet.com/" target="_blank" class="app-pill">
-                            <img src="https://www.google.com/s2/favicons?domain=usescarlet.com&sz=64" alt="Scarlet"> Scarlet
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Clean FAQ Accordion -->
-        <section id="faq">
-            <div class="section-header reveal">
-                <h2 data-en="Frequently Asked Questions" data-id="Pertanyaan Umum (FAQ)">Frequently Asked Questions</h2>
-            </div>
-            <div class="faq-wrap">
-                
-                <div class="faq-item reveal delay-1" onclick="toggleFAQ(this)">
-                    <div class="faq-q">
-                        <span data-en="Is this repository free?" data-id="Apakah repositori ini gratis?">Is this repository free?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-a" data-en="Yes, 100% free and open-source. Hosted entirely on GitHub Pages." data-id="Ya, 100% gratis dan open-source. Dihosting sepenuhnya dan selamanya di GitHub Pages.">
-                        Yes, 100% free and open-source. Hosted entirely on GitHub Pages.
-                    </div>
-                </div>
-
-                <div class="faq-item reveal delay-2" onclick="toggleFAQ(this)">
-                    <div class="faq-q">
-                        <span data-en="Do I need a computer to use this?" data-id="Apakah saya butuh PC untuk menggunakannya?">Do I need a computer to use this?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-a" data-en="No. While it works with PC-based tools like AltStore, you can use the link directly on your iPhone via ESign or Scarlet." data-id="Tidak. Meskipun berfungsi dengan alat PC seperti AltStore, Anda juga dapat menggunakannya langsung di iPhone via ESign atau Scarlet.">
-                        No. While it works with PC-based tools like AltStore, you can use the link directly on your iPhone via ESign or Scarlet.
-                    </div>
-                </div>
-                
-                <div class="faq-item reveal delay-3" onclick="toggleFAQ(this)">
-                    <div class="faq-q">
-                        <span data-en="Does this bypass Apple's cooling-off period?" data-id="Apakah ini mem-bypass cooldown dari Apple?">Does this bypass Apple's cooling-off period?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-a" data-en="No, this is only an app library (IPA files). You still need a valid certificate to install them." data-id="Tidak, ini hanyalah pustaka aplikasi (file IPA). Anda tetap memerlukan sertifikat yang valid untuk menginstalnya.">
-                        No, this is only an app library (IPA files). You still need a valid certificate to install them.
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <div data-en="Auto-updated via GitHub Actions • Built by Ghan" data-id="Diperbarui otomatis via GitHub Actions • Dibuat oleh Ghan">
-            Auto-updated via GitHub Actions • Built by Ghan
+    <!-- HERO SECTION -->
+    <section class="hero reveal active" id="home">
+        <div class="hero-badge" data-en="Repository Core 2.0" data-id="Repositori Inti 2.0">Repository Core 2.0</div>
+        <h1 data-en="Sideloading. Simplified." data-id="Sideloading. Lebih Sederhana.">Sideloading. Simplified.</h1>
+        <p data-en="A highly structured, auto-merging iOS application library engineered for every modern signer on the market." data-id="Pustaka aplikasi iOS terstruktur rapi yang digabungkan otomatis, dirancang untuk setiap alat sideloading modern.">
+            A highly structured, auto-merging iOS application library engineered for every modern signer on the market.
+        </p>
+        <div class="hero-actions">
+            <button class="btn btn-primary" onclick="copyURL()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span data-en="Copy Repository Link" data-id="Salin Tautan Repositori">Copy Repository Link</span>
+            </button>
+            <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank" class="btn btn-secondary">
+                <span data-en="View Source Code" data-id="Lihat Kode Sumber">View Source Code</span>
+            </a>
         </div>
+    </section>
+
+    <!-- INFINITE MARQUEE LOGOS -->
+    <div class="marquee-container reveal">
+        <!-- Konten diduplikasi di dalam flex untuk bikin loop sempurna tanpa putus -->
+        <div class="marquee-content">
+            <!-- Set 1 -->
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=sidestore.io&sz=64" alt="SideStore"><span>SideStore</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=esign.yyyue.xyz&sz=64" alt="ESign"><span>ESign</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=usescarlet.com&sz=64" alt="Scarlet"><span>Scarlet</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=altstore.io&sz=64" alt="AltStore"><span>AltStore</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="Feather"><span>Feather</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=k-sign.com&sz=64" alt="K-Sign"><span>K-Sign</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=flekstore.com&sz=64" alt="FlekSt0re"><span>FlekSt0re</span></div>
+            
+            <!-- Set 2 (Duplikasi untuk Infinite Loop) -->
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=sidestore.io&sz=64" alt="SideStore"><span>SideStore</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=esign.yyyue.xyz&sz=64" alt="ESign"><span>ESign</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=usescarlet.com&sz=64" alt="Scarlet"><span>Scarlet</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=altstore.io&sz=64" alt="AltStore"><span>AltStore</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="Feather"><span>Feather</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=k-sign.com&sz=64" alt="K-Sign"><span>K-Sign</span></div>
+            <div class="marquee-item"><img src="https://www.google.com/s2/favicons?domain=flekstore.com&sz=64" alt="FlekSt0re"><span>FlekSt0re</span></div>
+        </div>
+    </div>
+
+    <!-- BENTO GRID FEATURES -->
+    <section class="section-wrapper" id="features">
+        <h2 class="section-title reveal" data-en="Engineered for performance." data-id="Dirancang untuk performa maksimal.">Engineered for performance.</h2>
+        
+        <div class="bento-grid">
+            <!-- Large Card 1 -->
+            <div class="bento-card card-wide reveal">
+                <div>
+                    <div class="bento-title" data-en="Automated Data Pipeline" data-id="Alur Data Otomatis">Automated Data Pipeline</div>
+                    <div class="bento-desc" data-en="Powered by Python and GitHub Actions. Raw data is extracted, sanitized, and compiled completely hands-free." data-id="Ditenagai oleh Python & GitHub Actions. Data mentah diekstrak, dibersihkan, dan digabung tanpa campur tangan manusia.">
+                        Powered by Python and GitHub Actions. Raw data is extracted, sanitized, and compiled completely hands-free.
+                    </div>
+                </div>
+                <div class="bento-icon" style="margin-top: 32px; text-align: right;">⚙️</div>
+            </div>
+
+            <!-- Tall Card -->
+            <div class="bento-card card-tall reveal">
+                <div class="bento-stat stat-counter" data-target="58">0</div>
+                <div class="bento-title" data-en="Verified Repos" data-id="Repo Terverifikasi">Verified Repos</div>
+                <div class="bento-desc" style="margin-top:auto;" data-en="We continually aggregate IPAs from multiple trusted sources into one centralized master feed." data-id="Kami terus mengumpulkan file IPA dari berbagai sumber terpercaya ke dalam satu feed utama.">
+                    We continually aggregate IPAs from multiple trusted sources into one centralized master feed.
+                </div>
+            </div>
+
+            <!-- Small Card 1 -->
+            <div class="bento-card reveal">
+                <div class="bento-stat stat-counter" data-target="24">0</div>
+                <div class="bento-title" data-en="Hour Sync" data-id="Jam Sinkronisasi">Hour Sync</div>
+                <div class="bento-desc" data-en="Guaranteed freshness." data-id="Data selalu terbaru.">Guaranteed freshness.</div>
+            </div>
+
+            <!-- Small Card 2 -->
+            <div class="bento-card reveal">
+                <div class="bento-icon">🌍</div>
+                <div class="bento-title" data-en="Global CDN" data-id="Jaringan Global">Global CDN</div>
+                <div class="bento-desc" data-en="Hosted on GitHub." data-id="Berjalan di server GitHub.">Hosted on GitHub.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE TABS (INSTALLATION GUIDE) -->
+    <section class="section-wrapper" id="install">
+        <h2 class="section-title reveal" data-en="Seamless setup." data-id="Pemasangan super mulus.">Seamless setup.</h2>
+        
+        <div class="tabs-container reveal">
+            <!-- Tab Headers -->
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="openTab(event, 'tab-altstore')">AltStore / SideStore</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-esign')">ESign / Scarlet / K-Sign</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-feather')">Feather</button>
+            </div>
+            
+            <!-- Tab Content 1 -->
+            <div id="tab-altstore" class="tab-content active">
+                <ul class="step-list">
+                    <li data-en="Copy the repository link from the top of this page." data-id="Salin tautan repositori (Copy Link) dari bagian atas halaman ini.">Copy the repository link from the top of this page.</li>
+                    <li><strong data-en="Open AltStore or SideStore" data-id="Buka aplikasi AltStore atau SideStore">Open AltStore or SideStore</strong> <span data-en="on your iOS device." data-id="di perangkat iOS Anda.">on your iOS device.</span></li>
+                    <li data-en="Navigate to the 'Sources' tab and tap the '+' button." data-id="Pindah ke menu 'Sources' (Sumber) lalu tekan tombol tambah (+).">Navigate to the 'Sources' tab and tap the '+' button.</li>
+                    <li data-en="Paste the URL and tap 'Add'. The IPAs will load instantly." data-id="Tempelkan URL yang disalin lalu tekan 'Add'. Aplikasi akan langsung muncul.">Paste the URL and tap 'Add'. The IPAs will load instantly.</li>
+                </ul>
+            </div>
+
+            <!-- Tab Content 2 -->
+            <div id="tab-esign" class="tab-content">
+                <ul class="step-list">
+                    <li data-en="Copy the repository link provided above." data-id="Salin tautan repositori yang tersedia di atas.">Copy the repository link provided above.</li>
+                    <li><strong data-en="Open ESign, Scarlet, or K-Sign." data-id="Buka aplikasi ESign, Scarlet, atau K-Sign.">Open ESign, Scarlet, or K-Sign.</strong></li>
+                    <li data-en="Go to App Store / Source settings inside the app." data-id="Masuk ke pengaturan App Store atau manajemen Sumber di dalam aplikasi.">Go to App Store / Source settings inside the app.</li>
+                    <li data-en="Add a new source, paste the JSON URL, and save. Refresh the page to see apps." data-id="Tambahkan sumber baru, tempel URL JSON, dan simpan. Segarkan halaman untuk melihat aplikasi.">Add a new source, paste the JSON URL, and save. Refresh the page to see apps.</li>
+                </ul>
+            </div>
+
+            <!-- Tab Content 3 -->
+            <div id="tab-feather" class="tab-content">
+                <ul class="step-list">
+                    <li data-en="Copy the source JSON link." data-id="Salin tautan file JSON sumber.">Copy the source JSON link.</li>
+                    <li><strong data-en="Launch Feather" data-id="Buka aplikasi Feather">Launch Feather</strong> <span data-en="from your home screen." data-id="dari layar utama Anda.">from your home screen.</span></li>
+                    <li data-en="Tap on Settings -> Repositories." data-id="Tekan Pengaturan (Settings) lalu pilih Repositories.">Tap on Settings -> Repositories.</li>
+                    <li data-en="Add the copied URL. The app library will sync automatically." data-id="Masukkan URL yang telah disalin. Pustaka aplikasi akan disinkronisasi secara otomatis.">Add the copied URL. The app library will sync automatically.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLEAN FAQ SECTION -->
+    <section class="section-wrapper" id="faq">
+        <h2 class="section-title reveal" data-en="Questions? Answered." data-id="Pertanyaan? Terjawab.">Questions? Answered.</h2>
+        
+        <div class="faq-wrap reveal">
+            <!-- FAQ 1 -->
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-btn">
+                    <span data-en="Does it require a computer to use?" data-id="Apakah butuh komputer (PC)?">Does it require a computer to use?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-content">
+                    <div class="faq-text" data-en="The repository itself is just a link. If you use on-device signers like ESign or Scarlet with a valid certificate, no computer is needed." data-id="Repositori ini hanya berupa tautan. Jika Anda menggunakan alat on-device seperti ESign/Scarlet dengan sertifikat aktif, komputer tidak dibutuhkan sama sekali.">
+                        The repository itself is just a link. If you use on-device signers like ESign or Scarlet with a valid certificate, no computer is needed.
+                    </div>
+                </div>
+            </div>
+            <!-- FAQ 2 -->
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-btn">
+                    <span data-en="What happens when an app updates?" data-id="Apa yang terjadi jika ada update aplikasi?">What happens when an app updates?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-content">
+                    <div class="faq-text" data-en="Our backend fetches updates every 24 hours. Once the JSON file is updated on GitHub, it automatically reflects in your sideloading app upon refresh." data-id="Sistem backend kami berjalan setiap 24 jam. Ketika file JSON di GitHub diperbarui, aplikasi sideloading Anda akan menampilkan versi terbaru saat di-refresh.">
+                        Our backend fetches updates every 24 hours. Once the JSON file is updated on GitHub, it automatically reflects in your sideloading app upon refresh.
+                    </div>
+                </div>
+            </div>
+            <!-- FAQ 3 -->
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-btn">
+                    <span data-en="Is there any cost involved?" data-id="Apakah layanan ini berbayar?">Is there any cost involved?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-content">
+                    <div class="faq-text" data-en="No. GHN Library is built for the community. The merging script and the hosting via GitHub Pages are completely free." data-id="Tidak. GHN Library dibangun untuk komunitas. Skrip penggabungan dan hosting via GitHub Pages ini 100% gratis selamanya.">
+                        No. GHN Library is built for the community. The merging script and the hosting via GitHub Pages are completely free.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div data-en="Engineered by Ghan. Powered by open-source." data-id="Dirancang oleh Ghan. Ditenagai oleh teknologi open-source.">Engineered by Ghan. Powered by open-source.</div>
+        <div style="margin-top: 8px;">Copyright © 2026 GHN Library. All rights reserved.</div>
     </footer>
 
-    <!-- Interactive Toast Notification -->
-    <div class="toast" id="toastMsg" data-en="Link copied to clipboard!" data-id="Tautan berhasil disalin!">Link copied to clipboard!</div>
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toastMsg" data-en="Link copied to clipboard" data-id="Tautan berhasil disalin">Link copied to clipboard</div>
 
+    <!-- SCRIPTS -->
     <script>
-        // Language Toggle System (EN / ID)
+        // --- TRANSLATION SYSTEM ---
         let currentLang = 'en';
         function toggleLang() {
             currentLang = currentLang === 'en' ? 'id' : 'en';
-            
-            // Swap all texts based on data attributes
             document.querySelectorAll('[data-en]').forEach(el => {
                 el.innerText = el.getAttribute(`data-${currentLang}`);
             });
-            
-            // Swap button text
             document.getElementById('langToggle').innerText = currentLang === 'en' ? 'ID' : 'EN';
         }
 
-        // Copy URL with Toast Animation
+        // --- COPY URL ---
         function copyURL() {
             navigator.clipboard.writeText("https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json");
             const toast = document.getElementById('toastMsg');
@@ -395,52 +416,59 @@
             setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
-        // Smooth FAQ Accordion
-        function toggleFAQ(el) {
+        // --- INTERACTIVE TABS ---
+        function openTab(evt, tabId) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            const tabBtns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove("active");
+            }
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // --- FAQ ACCORDION ---
+        function toggleFaq(el) {
             const isOpen = el.classList.contains('open');
             document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('open'));
             if (!isOpen) el.classList.add('open');
         }
 
-        // Intersection Observer: Scroll Reveal & Running Number Counter
+        // --- SCROLL REVEAL & RUNNING COUNTER ---
         document.addEventListener("DOMContentLoaded", () => {
             const reveals = document.querySelectorAll(".reveal");
-            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // Ketika elemen masuk layar
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
                         
-                        // Menjalankan Animasi Angka (Counter) hanya sekali
-                        if (entry.target.classList.contains('stat-item')) {
-                            const numEl = entry.target.querySelector('.stat-num');
-                            if (numEl && !numEl.classList.contains('counted')) {
+                        // Counter animation inside bento cards
+                        const counters = entry.target.querySelectorAll('.stat-counter');
+                        counters.forEach(numEl => {
+                            if (!numEl.classList.contains('counted')) {
                                 const target = +numEl.getAttribute('data-target');
                                 let count = 0;
-                                const speed = target / 40; // Kecepatan jalannya angka
-                                
+                                const speed = target / 40; 
                                 const update = () => {
                                     count += speed;
                                     if (count < target) {
                                         numEl.innerText = Math.ceil(count);
                                         requestAnimationFrame(update);
                                     } else {
-                                        numEl.innerText = (target > 1000) ? target + "+" : target;
+                                        numEl.innerText = (target > 50) ? target + "+" : target;
                                         numEl.classList.add('counted');
                                     }
                                 };
                                 update();
                             }
-                        }
+                        });
                     }
                 });
-            }, { 
-                threshold: 0.15, // Memicu animasi saat 15% bagian elemen terlihat
-                rootMargin: "0px 0px -50px 0px" // Sedikit menunda munculnya agar efek scroll terasa
-            });
+            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-            // Daftarkan semua elemen dengan class 'reveal'
             reveals.forEach(reveal => {
                 if (!reveal.classList.contains('active')) observer.observe(reveal);
             });
