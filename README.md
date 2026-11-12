@@ -20,4 +20,4 @@ An all-in-one aggregated repository for iOS apps, games, and tweaks. Configured 
 Copy the URL below and add it to the **Sources** menu in your preferred signer app (**FlekSt0re**, **ESign**, **AltStore**, **SideStore**, or **Feather**):
 
 ```text
-(https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json)
+https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/refs/heads/main/repo.json
