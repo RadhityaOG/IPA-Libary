@@ -45,7 +45,7 @@ urls = [
     "https://raw.githubusercontent.com/SnailiOS/SnailiOS.github.io/main/apps.json",
     "https://raw.githubusercontent.com/LukeZGD/LukeZGD.github.io/main/apps.json",
     "https://quarksources.github.io/quarksources.json",
-    "https://raw.githubusercontent.com/CokePokes/CokePokes.github.io/master/apps.json"
+    "https://raw.githubusercontent.com/CokePokes/CokePokes.github.io/master/apps.json",
     "https://apps.nabzclan.vip/repos/altstore.php",
     "https://driftywinds.github.io/repos/esign.json",
     "https://dvntm0.github.io/AltStore/raw/refs/heads/main/esign.json",
@@ -60,7 +60,6 @@ urls = [
     "https://ipa.aspy.dev/repo.json",
     "https://alt.getutm.app",
     "https://raw.githubusercontent.com/SpotC-Plus/SpotC-Plus.github.io/main/repo.json"
-
 ]
 
 merged_apps = []
@@ -81,11 +80,11 @@ for url in urls:
         print(f"Skip {url}: {e}")
 
 mega_repo = {
-    "name": "GHN - IPA Libary",
-    "identifier": "com.ghan.megarepo",
+    "name": "GHN - IPA Library",
+    "identifier": "com.ghn.ipalibrary",
     "subtitle": "All-in-One Merged Repo",
     "description": "Auto-merged IPA repository",
-    "iconURL": "https://raw.githubusercontent.com/RadhityaOG/ghn-ipa-repo/main/IMG_6762.jpeg",
+    "iconURL": "https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/IMG_6762.jpeg",
     "apps": merged_apps
 }
 
