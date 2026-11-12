@@ -3,19 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GHN | Enterprise iOS IPA Library</title>
-    <meta name="description" content="The ultimate, auto-merged iOS IPA repository infrastructure for modern sideloading.">
+    <title>GHN | Universal IPA Library</title>
+    <meta name="description" content="Clean and automated iOS IPA repository for your favorite sideloading tools.">
     <style>
         :root {
-            --bg-color: #03050a;
-            --surface: #0a0e17;
-            --surface-hover: #121826;
-            --border: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(139, 92, 246, 0.4);
-            --accent: #8b5cf6;
-            --accent-glow: rgba(139, 92, 246, 0.5);
+            --bg: #050505;
+            --surface: #121212;
+            --surface-hover: #1a1a1a;
             --text-main: #ffffff;
-            --text-muted: #94a3b8;
+            --text-muted: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #ffffff;
         }
 
         * {
@@ -28,7 +26,7 @@
         html { scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             color: var(--text-main);
             overflow-x: hidden;
             display: flex;
@@ -36,349 +34,249 @@
             align-items: center;
         }
 
-        /* Complex Animated Backgrounds */
-        .bg-grid {
+        /* Subtle Noise/Mesh Background (Minimalist) */
+        .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -3;
-            mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px; z-index: -1;
+            mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
         }
 
-        .orb {
-            position: fixed; border-radius: 50%; filter: blur(120px); z-index: -2; opacity: 0.5;
-            animation: floatOrb 15s ease-in-out infinite alternate;
-        }
-        .orb-1 { width: 50vw; height: 50vw; background: rgba(139, 92, 246, 0.2); top: -20%; left: -10%; }
-        .orb-2 { width: 40vw; height: 40vw; background: rgba(56, 189, 248, 0.15); bottom: -10%; right: -10%; animation-delay: -5s; }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.2); }
+        /* Floating Navbar */
+        .navbar {
+            position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 100;
+            background: rgba(18, 18, 18, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border); border-radius: 40px;
+            padding: 0.5rem 0.5rem 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+            width: 90%; max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        /* Floating Navbar Overlay */
-        .navbar-container {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 100;
-            background: rgba(10, 14, 23, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--border); border-radius: 50px;
-            padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 25px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            animation: slideDownFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .nav-logo img {
-            width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
-            transition: transform 0.2s; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .nav-logo:active img { transform: scale(0.85); }
-
-        .nav-links { display: flex; gap: 0.2rem; padding-right: 8px; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-main); font-weight: 600; }
+        .nav-logo img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+        
+        .nav-links { display: flex; align-items: center; gap: 0.25rem; }
         .nav-links a {
-            color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500;
-            padding: 8px 18px; border-radius: 30px; transition: all 0.3s;
+            color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500;
+            padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.2s;
         }
-        .nav-links a:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.08); }
+        .nav-links a:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
 
-        /* Main Container */
+        /* Translate Button */
+        .lang-btn {
+            background: var(--text-main); color: var(--bg); border: none; padding: 0.5rem 1rem;
+            border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: transform 0.2s;
+        }
+        .lang-btn:active { transform: scale(0.9); }
+
+        /* Main Container - Responsive Padding */
         .main-content {
-            width: 100%; max-width: 1000px; padding: 140px 2rem 5rem 2rem;
-            display: flex; flex-direction: column; gap: 8rem; /* Jarak antar section dijauhin biar kerasa panjang */
+            width: 100%; max-width: 1000px; padding: 120px 1.5rem 4rem 1.5rem;
+            display: flex; flex-direction: column; gap: 6rem;
         }
 
         /* Hero Section */
         .hero { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .badge {
-            padding: 8px 16px; border-radius: 30px; border: 1px solid var(--border-highlight);
-            background: rgba(139, 92, 246, 0.1); color: #d8b4fe; font-size: 0.8rem; font-weight: 600;
+            padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.03); color: var(--text-muted); font-size: 0.75rem; font-weight: 600;
             letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2rem;
-            box-shadow: 0 0 20px var(--accent-glow);
         }
-        h1 { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.5rem; }
-        h1 span {
-            background: linear-gradient(135deg, #fff 0%, #64748b 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        p.subtitle { color: var(--text-muted); font-size: 1.2rem; line-height: 1.6; max-width: 600px; margin: 0 auto 3rem auto; }
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -1px; margin-bottom: 1.25rem; }
+        p.subtitle { color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; max-width: 550px; margin: 0 auto 2.5rem auto; }
 
-        /* Interactive Buttons */
-        .actions { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+        /* Buttons */
+        .actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; width: 100%; }
         .btn {
-            padding: 1rem 2rem; border-radius: 16px; font-size: 1rem; font-weight: 600; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 0.9rem 1.5rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
+            width: 100%; max-width: 250px; text-decoration: none;
         }
-        .btn-primary {
-            background: var(--text-main); color: var(--bg-color); border: none;
-            box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
-        }
-        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(255, 255, 255, 0.25); }
-        .btn-primary:active { transform: scale(0.95); }
-        .btn-outline { background: rgba(255,255,255,0.03); color: var(--text-main); border: 1px solid var(--border); backdrop-filter: blur(10px); }
-        .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); transform: translateY(-4px); }
+        .btn-primary { background: var(--text-main); color: var(--bg); border: none; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15); }
+        .btn-primary:active { transform: scale(0.96); }
+        .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); }
 
-        /* Global Reveal Classes (Ini Rahasia Animasi Scrollnya) */
-        .reveal { opacity: 0; transform: translateY(70px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        /* Scroll Reveal System */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
 
-        /* Stats Section */
-        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center; }
-        .stat-box { padding: 2rem; border-radius: 24px; background: linear-gradient(180deg, var(--surface) 0%, transparent 100%); border-top: 1px solid var(--border); }
-        .stat-number { font-size: 3.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem; }
-        .stat-label { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; text-align: center; }
+        .stat-item { padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); }
+        .stat-num { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .stat-label { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
 
-        /* Section Headers */
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -1px; }
-        .section-header p { color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.6; }
+        /* Section Titles */
+        .section-title { font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.5px; }
 
-        /* Workflow Section (Enterprise Logic) */
-        .workflow { display: flex; flex-direction: column; gap: 2rem; position: relative; }
-        .workflow::before {
-            content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px;
-            background: linear-gradient(to bottom, var(--accent), transparent); z-index: -1;
-        }
-        .workflow-step { display: flex; gap: 2rem; align-items: flex-start; }
-        .step-dot {
-            width: 50px; height: 50px; border-radius: 50%; background: var(--surface);
-            border: 2px solid var(--accent); display: flex; justify-content: center; align-items: center;
-            font-weight: 700; color: var(--accent); flex-shrink: 0; box-shadow: 0 0 15px var(--accent-glow);
-        }
-        .step-content {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem 2rem;
-            border-radius: 20px; flex: 1; transition: all 0.3s;
-        }
-        .step-content:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); transform: translateX(10px); }
-        .step-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
-        .step-content p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
-
-        /* Supported Apps Grid */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        /* Simple Grid Cards */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
         .card {
-            background: var(--surface); border-radius: 24px; padding: 2.5rem;
-            border: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative; overflow: hidden;
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 2rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        .card:hover { transform: translateY(-8px); border-color: var(--border-highlight); background: var(--surface-hover); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
-        .card p { color: var(--text-muted); line-height: 1.6; margin-bottom: 2rem; }
-        
-        .app-links { display: flex; flex-wrap: wrap; gap: 12px; }
-        .app-btn {
-            display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border); padding: 8px 16px 8px 8px; border-radius: 30px;
-            text-decoration: none; color: #ccc; font-size: 0.9rem; font-weight: 500; transition: all 0.3s;
-        }
-        .app-btn img { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 1px solid rgba(255,255,255,0.2); }
-        .app-btn:hover { background: rgba(255,255,255,0.1); border-color: #fff; color: #fff; transform: scale(1.05); }
+        .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+        .card h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; }
 
-        /* Interactive FAQ Accordion */
-        .faq-container { display: flex; flex-direction: column; gap: 1rem; }
-        .faq-item {
-            background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-            overflow: hidden; transition: all 0.3s; cursor: pointer;
+        /* App Pills */
+        .app-links { display: flex; flex-wrap: wrap; gap: 10px; }
+        .app-pill {
+            display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border); padding: 6px 14px 6px 6px; border-radius: 24px;
+            color: var(--text-muted); font-size: 0.85rem; text-decoration: none; transition: all 0.2s;
         }
-        .faq-item:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.02); }
-        .faq-question {
-            padding: 1.5rem 2rem; font-size: 1.1rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center;
-        }
-        .faq-icon { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); font-size: 1.5rem; color: var(--accent); }
-        .faq-answer {
-            padding: 0 2rem; max-height: 0; opacity: 0; color: var(--text-muted); line-height: 1.6;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .faq-item.open .faq-answer { padding: 0 2rem 1.5rem 2rem; max-height: 200px; opacity: 1; }
+        .app-pill img { width: 20px; height: 20px; border-radius: 50%; background: #fff; }
+        .app-pill:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: rgba(255,255,255,0.2); }
+
+        /* Clean FAQ Accordion */
+        .faq-wrap { display: flex; flex-direction: column; gap: 0.75rem; }
+        .faq-item { border: 1px solid var(--border); border-radius: 16px; background: var(--surface); overflow: hidden; cursor: pointer; transition: background 0.3s; }
+        .faq-item:hover { background: var(--surface-hover); }
+        .faq-q { padding: 1.25rem 1.5rem; font-weight: 500; display: flex; justify-content: space-between; align-items: center; }
+        .faq-icon { font-size: 1.2rem; transition: transform 0.3s; color: var(--text-muted); }
+        .faq-a { padding: 0 1.5rem; max-height: 0; opacity: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; transition: all 0.3s ease; }
+        .faq-item.open .faq-a { padding: 0 1.5rem 1.25rem 1.5rem; max-height: 200px; opacity: 1; }
         .faq-item.open .faq-icon { transform: rotate(45deg); }
 
         /* Footer */
-        footer {
-            width: 100%; border-top: 1px solid var(--border); padding: 3rem 2rem;
-            display: flex; flex-direction: column; align-items: center; gap: 1rem;
-            background: linear-gradient(0deg, #000 0%, transparent 100%);
-        }
-        .footer-logo { width: 32px; height: 32px; border-radius: 50%; filter: grayscale(1); opacity: 0.5; }
-        .footer-text { color: #555; font-size: 0.85rem; }
+        footer { margin-top: auto; padding: 3rem 1.5rem; text-align: center; border-top: 1px solid var(--border); width: 100%; color: var(--text-muted); font-size: 0.85rem; }
 
         /* Toast */
         .toast {
             position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: var(--text-main); color: var(--bg-color); padding: 14px 28px;
-            border-radius: 30px; font-size: 0.95rem; font-weight: 600; opacity: 0;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000;
-            box-shadow: 0 10px 40px rgba(255,255,255,0.3);
+            background: var(--text-main); color: var(--bg); padding: 12px 24px; border-radius: 24px;
+            font-size: 0.9rem; font-weight: 600; opacity: 0; transition: all 0.4s ease; z-index: 1000;
         }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-        /* Initial Load Animations */
-        @keyframes slideDownFade { from { opacity: 0; transform: translate(-50%, -40px); } to { opacity: 1; transform: translate(-50%, 0); } }
+        /* PC & iPad Responsiveness adjustments */
+        @media (min-width: 768px) {
+            .actions { justify-content: center; }
+            .btn { width: auto; }
+            .nav-links { gap: 1rem; }
+        }
+        /* Mobile Navbar adjustment */
+        @media (max-width: 480px) {
+            .nav-links a { display: none; } /* Hide text links on very small screens, keep language button */
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-grid"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+    <div class="bg-pattern"></div>
 
-    <!-- Floating Minimalist Navbar -->
-    <nav class="navbar-container">
+    <!-- Clean Navbar -->
+    <nav class="navbar">
         <a href="#home" class="nav-logo">
             <img src="IMG_6762.jpeg" alt="Logo">
+            GHN
         </a>
         <div class="nav-links">
-            <a href="#workflow">Architecture</a>
-            <a href="#apps">Integrations</a>
-            <a href="#faq">FAQ</a>
+            <a href="#features" data-en="Features" data-id="Fitur">Features</a>
+            <a href="#apps" data-en="Apps" data-id="Aplikasi">Apps</a>
+            <a href="#faq" data-en="FAQ" data-id="FAQ">FAQ</a>
+            <button class="lang-btn" onclick="toggleLang()" id="langToggle">ID</button>
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="main-content">
         
-        <!-- Hero Section (Auto Reveal) -->
+        <!-- Hero Section -->
         <section class="hero reveal active" id="home">
-            <div class="badge">Enterprise Scale Repository</div>
-            <h1><span>Next-Gen</span><br>Sideloading.</h1>
-            <p class="subtitle">An advanced, globally distributed, and auto-updating iOS IPA infrastructure designed to integrate flawlessly with every modern signer.</p>
+            <div class="badge" data-en="Verified Source" data-id="Sumber Terverifikasi">Verified Source</div>
+            <h1 data-en="Universal IPA Library." data-id="Pustaka IPA Universal.">Universal IPA Library.</h1>
+            <p class="subtitle" data-en="A minimalist, auto-updating iOS app repository designed to work seamlessly with your favorite sideloading tools." data-id="Repositori aplikasi iOS minimalis dan otomatis yang dirancang khusus untuk alat sideloading favorit Anda.">
+                A minimalist, auto-updating iOS app repository designed to work seamlessly with your favorite sideloading tools.
+            </p>
             
             <div class="actions">
                 <button class="btn btn-primary" onclick="copyURL()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    Copy Repository URL
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span data-en="Copy Source URL" data-id="Salin URL Source">Copy Source URL</span>
                 </button>
                 <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank" class="btn btn-outline">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                    View Architecture
+                    <span data-en="View GitHub" data-id="Lihat GitHub">View GitHub</span>
                 </a>
             </div>
         </section>
 
-        <!-- Stats Counter Section (Interactive) -->
-        <section class="stats-container">
-            <div class="stat-box reveal delay-1">
-                <div class="stat-number" data-target="58">0</div>
-                <div class="stat-label">Sources Merged</div>
+        <!-- Stats Counter -->
+        <section class="stats-grid">
+            <div class="stat-item reveal">
+                <div class="stat-num" data-target="58">0</div>
+                <div class="stat-label" data-en="Sources Merged" data-id="Sumber Digabung">Sources Merged</div>
             </div>
-            <div class="stat-box reveal delay-2">
-                <div class="stat-number" data-target="1400">0</div>
-                <div class="stat-number" style="font-size:1.5rem; margin-top:-10px;">+ Apps</div>
-                <div class="stat-label">Available IPAs</div>
-            </div>
-            <div class="stat-box reveal delay-3">
-                <div class="stat-number" data-target="24">0</div>
-                <div class="stat-label">Hour Sync Cycle</div>
+            <div class="stat-item reveal">
+                <div class="stat-num" data-target="24">0</div>
+                <div class="stat-label" data-en="Hour Auto-Sync" data-id="Jam Sinkronisasi">Hour Auto-Sync</div>
             </div>
         </section>
 
-        <!-- Enterprise Workflow / Architecture -->
-        <section id="workflow">
-            <div class="section-header reveal">
-                <h2>Automated Pipeline</h2>
-                <p>How our infrastructure securely aggregates and delivers thousands of applications without human intervention.</p>
-            </div>
-            <div class="workflow">
-                <div class="workflow-step reveal delay-1">
-                    <div class="step-dot">1</div>
-                    <div class="step-content">
-                        <h3>Scraping & Validation (Python)</h3>
-                        <p>Our custom Python scripts continuously monitor 58+ trusted community repositories, extracting raw IPA data and validating source integrity.</p>
-                    </div>
-                </div>
-                <div class="workflow-step reveal delay-2">
-                    <div class="step-dot">2</div>
-                    <div class="step-content">
-                        <h3>CI/CD Merging (GitHub Actions)</h3>
-                        <p>Automated workflows trigger every 24 hours to deduplicate, format, and compile the scraped data into a singular, highly-optimized JSON structure.</p>
-                    </div>
-                </div>
-                <div class="workflow-step reveal delay-3">
-                    <div class="step-dot">3</div>
-                    <div class="step-content">
-                        <h3>Global Edge Delivery</h3>
-                        <p>Hosted on GitHub Pages, the final repository is distributed globally via CDN, ensuring lightning-fast load times for your sideloading apps.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Supported Apps Grid -->
-        <section id="apps">
-            <div class="section-header reveal">
-                <h2>Universal Integration</h2>
-                <p>One link to rule them all. Designed to be instantly parsed by the most advanced iOS signers.</p>
-            </div>
-            <div class="grid">
+        <!-- Features & Apps -->
+        <section id="features">
+            <h2 class="section-title reveal" data-en="How it works." data-id="Cara kerja.">How it works.</h2>
+            <div class="card-grid">
                 
-                <div class="card reveal delay-1">
-                    <h3>Primary Signers</h3>
-                    <p>Copy the repository link and add it directly to these official apps to unlock thousands of IPAs instantly.</p>
+                <div class="card reveal" id="apps">
+                    <h3 data-en="Supported Apps" data-id="Aplikasi Didukung">Supported Apps</h3>
+                    <p data-en="Paste the source link directly into any of these tools to start installing apps." data-id="Tempelkan tautan repo langsung ke salah satu alat ini untuk mulai menginstal aplikasi.">
+                        Paste the source link directly into any of these tools to start installing apps.
+                    </p>
                     <div class="app-links">
-                        <a href="https://sidestore.io/" target="_blank" class="app-btn">
+                        <a href="https://sidestore.io/" target="_blank" class="app-pill">
                             <img src="https://www.google.com/s2/favicons?domain=sidestore.io&sz=64" alt="SideStore"> SideStore
                         </a>
-                        <a href="https://altstore.io/" target="_blank" class="app-btn">
+                        <a href="https://altstore.io/" target="_blank" class="app-pill">
                             <img src="https://www.google.com/s2/favicons?domain=altstore.io&sz=64" alt="AltStore"> AltStore
                         </a>
-                        <a href="https://github.com/khcrysalis/Feather" target="_blank" class="app-btn">
+                        <a href="https://esign.yyyue.xyz/" target="_blank" class="app-pill">
+                            <img src="https://www.google.com/s2/favicons?domain=esign.yyyue.xyz&sz=64" alt="ESign"> ESign
+                        </a>
+                        <a href="https://usescarlet.com/" target="_blank" class="app-pill">
+                            <img src="https://www.google.com/s2/favicons?domain=usescarlet.com&sz=64" alt="Scarlet"> Scarlet
+                        </a>
+                        <a href="https://github.com/khcrysalis/Feather" target="_blank" class="app-pill">
                             <img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="Feather"> Feather
                         </a>
                     </div>
                 </div>
 
-                <div class="card reveal delay-2">
-                    <h3>On-Device Tools</h3>
-                    <p>Perfectly structured for on-device signing tools requiring no computer access.</p>
-                    <div class="app-links">
-                        <a href="https://esign.yyyue.xyz/" target="_blank" class="app-btn">
-                            <img src="https://www.google.com/s2/favicons?domain=esign.yyyue.xyz&sz=64" alt="ESign"> ESign
-                        </a>
-                        <a href="https://usescarlet.com/" target="_blank" class="app-btn">
-                            <img src="https://www.google.com/s2/favicons?domain=usescarlet.com&sz=64" alt="Scarlet"> Scarlet
-                        </a>
-                    </div>
+                <div class="card reveal">
+                    <h3 data-en="Automated Updates" data-id="Pembaruan Otomatis">Automated Updates</h3>
+                    <p data-en="Powered by Python and GitHub Actions. We scrape and compile verified community IPAs into one clean feed automatically." data-id="Ditenagai oleh Python dan GitHub Actions. Kami mengambil dan menyusun IPA komunitas terverifikasi ke dalam satu feed bersih secara otomatis.">
+                        Powered by Python and GitHub Actions. We scrape and compile verified community IPAs into one clean feed automatically.
+                    </p>
                 </div>
 
             </div>
         </section>
 
-        <!-- Interactive FAQ Accordion -->
+        <!-- Clean FAQ -->
         <section id="faq">
-            <div class="section-header reveal">
-                <h2>System Details (FAQ)</h2>
-                <p>Everything you need to know about how GHN Library operates.</p>
-            </div>
-            <div class="faq-container">
+            <h2 class="section-title reveal">FAQ</h2>
+            <div class="faq-wrap">
                 
-                <div class="faq-item reveal delay-1" onclick="toggleFAQ(this)">
-                    <div class="faq-question">
-                        Is this repository free to use?
+                <div class="faq-item reveal" onclick="toggleFAQ(this)">
+                    <div class="faq-q">
+                        <span data-en="Is this free?" data-id="Apakah ini gratis?">Is this free?</span>
                         <span class="faq-icon">+</span>
                     </div>
-                    <div class="faq-answer">
-                        Absolutely. GHN Library is built as an open-source initiative. It relies entirely on free infrastructure provided by GitHub and community contributions. You will never be charged to access the source URL.
+                    <div class="faq-a" data-en="Yes, 100% free and open-source. Hosted entirely on GitHub Pages." data-id="Ya, 100% gratis dan open-source. Dihosting sepenuhnya di GitHub Pages.">
+                        Yes, 100% free and open-source. Hosted entirely on GitHub Pages.
                     </div>
                 </div>
 
-                <div class="faq-item reveal delay-2" onclick="toggleFAQ(this)">
-                    <div class="faq-question">
-                        How often do the apps get updated?
+                <div class="faq-item reveal" onclick="toggleFAQ(this)">
+                    <div class="faq-q">
+                        <span data-en="Do I need a computer?" data-id="Apakah butuh komputer?">Do I need a computer?</span>
                         <span class="faq-icon">+</span>
                     </div>
-                    <div class="faq-answer">
-                        The repository is maintained by an automated CI/CD pipeline (GitHub Actions). The scripts run continuously, compiling and merging data from over 58 trusted sources every 24 hours to ensure you have the latest app versions.
-                    </div>
-                </div>
-
-                <div class="faq-item reveal delay-3" onclick="toggleFAQ(this)">
-                    <div class="faq-question">
-                        Does this work with my device's UDID being cooling off?
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        This repository strictly provides the IPA files (the apps themselves). It does not bypass Apple's 30-day cooling-off period or hardware locks. You still need a valid certificate or a working sideloading method to install these apps.
+                    <div class="faq-a" data-en="Our link works with both PC-based tools (AltStore) and on-device signers (ESign, Scarlet)." data-id="Tautan kami berfungsi baik dengan alat PC (AltStore) maupun on-device (ESign, Scarlet).">
+                        Our link works with both PC-based tools (AltStore) and on-device signers (ESign, Scarlet).
                     </div>
                 </div>
 
@@ -387,80 +285,79 @@
 
     </main>
 
-    <!-- Footer -->
     <footer>
-        <img src="IMG_6762.jpeg" alt="Logo" class="footer-logo">
-        <div class="footer-text">
-            © 2026 GHN Enterprise Infrastructure. Deployed via GitHub Pages.
+        <div data-en="Auto-updated via GitHub Actions • Built by Ghan" data-id="Diperbarui otomatis via GitHub Actions • Dibuat oleh Ghan">
+            Auto-updated via GitHub Actions • Built by Ghan
         </div>
     </footer>
 
     <!-- Toast -->
-    <div class="toast" id="toastMsg">Endpoint URL successfully copied to clipboard</div>
+    <div class="toast" id="toastMsg" data-en="Copied to clipboard!" data-id="Berhasil disalin!">Copied to clipboard!</div>
 
     <script>
-        // 1. Copy URL Function with Animation
+        // Language Toggle System (EN / ID)
+        let currentLang = 'en';
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'id' : 'en';
+            
+            // Ubah semua text yang punya atribut data-en / data-id
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
+            });
+            
+            // Ubah teks tombol lang
+            document.getElementById('langToggle').innerText = currentLang === 'en' ? 'ID' : 'EN';
+        }
+
+        // Copy URL
         function copyURL() {
             navigator.clipboard.writeText("https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json");
             const toast = document.getElementById('toastMsg');
             toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); }, 2500);
         }
 
-        // 2. Interactive FAQ Accordion
-        function toggleFAQ(element) {
-            const isOpen = element.classList.contains('open');
-            // Close all others
+        // FAQ Toggle
+        function toggleFAQ(el) {
+            const isOpen = el.classList.contains('open');
             document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('open'));
-            // Open clicked one if it was closed
-            if (!isOpen) {
-                element.classList.add('open');
-            }
+            if (!isOpen) el.classList.add('open');
         }
 
-        // 3. Robust Scroll Reveal System
+        // Scroll Reveal & Number Counter
         document.addEventListener("DOMContentLoaded", () => {
             const reveals = document.querySelectorAll(".reveal");
-            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // Ketika elemen masuk ke dalam layar
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
                         
-                        // 4. Trigger Number Counter Animation (Kalau bagian stats masuk layar)
-                        if (entry.target.classList.contains('stat-box')) {
-                            const numElement = entry.target.querySelector('.stat-number');
-                            if (numElement && !numElement.classList.contains('counted')) {
-                                const target = +numElement.getAttribute('data-target');
+                        // Counter Animasi
+                        if (entry.target.classList.contains('stat-item')) {
+                            const numEl = entry.target.querySelector('.stat-num');
+                            if (numEl && !numEl.classList.contains('counted')) {
+                                const target = +numEl.getAttribute('data-target');
                                 let count = 0;
-                                const speed = target / 40; // Kecepatan ngitung
-                                
-                                const updateCount = () => {
+                                const speed = target / 30; 
+                                const update = () => {
                                     count += speed;
                                     if (count < target) {
-                                        numElement.innerText = Math.ceil(count);
-                                        requestAnimationFrame(updateCount);
+                                        numEl.innerText = Math.ceil(count);
+                                        requestAnimationFrame(update);
                                     } else {
-                                        numElement.innerText = target;
-                                        numElement.classList.add('counted');
+                                        numEl.innerText = target;
+                                        numEl.classList.add('counted');
                                     }
                                 };
-                                updateCount();
+                                update();
                             }
                         }
                     }
                 });
-            }, { 
-                threshold: 0.1, // Muncul ketika 10% elemen terlihat
-                rootMargin: "0px 0px -50px 0px" // Bikin efek revealnya telat dikit nunggu kita scroll ke bawah
-            });
+            }, { threshold: 0.1 });
 
             reveals.forEach(reveal => {
-                // Kecualikan elemen hero biar langsung muncul saat web dibuka
-                if (!reveal.classList.contains('active')) {
-                    observer.observe(reveal);
-                }
+                if (!reveal.classList.contains('active')) observer.observe(reveal);
             });
         });
     </script>
