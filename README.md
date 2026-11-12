@@ -9,7 +9,7 @@
 
 ---
 
-An all-in-one aggregated repository for iOS apps, games, and tweaks. Configured to be fully compatible with standard **AltSources** and **ESign** formats.
+An all-in-one aggregated repository for iOS apps, games, and tweaks. Configured to be fully compatible with standard **AltSources** format.
 
 ---
 
