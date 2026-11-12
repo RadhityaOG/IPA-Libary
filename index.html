@@ -23,6 +23,11 @@
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, sans-serif;
         }
 
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -30,6 +35,7 @@
             flex-direction: column;
             min-height: 100vh;
             overflow-x: hidden;
+            align-items: center;
         }
 
         /* Subtle animated background grid */
@@ -61,63 +67,78 @@
             100% { transform: scale(1.2) translate(-20px, 20px); opacity: 1; }
         }
 
-        /* Sidebar / Header Navigation */
-        .sidebar {
-            width: 100%;
-            padding: 1.5rem 2rem;
+        /* Floating Minimalist Navbar Pill */
+        .navbar-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(18, 18, 18, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px; /* Lekukan membulat */
+            padding: 8px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            gap: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: slideDownFade 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .brand {
+        .nav-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 1.1rem;
-            letter-spacing: -0.5px;
+            justify-content: center;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .brand img {
-            width: 36px; height: 36px;
-            border-radius: 10px;
+        .nav-logo img {
+            width: 38px; height: 38px;
+            border-radius: 50%;
             object-fit: cover;
-            border: 1px solid var(--border);
+        }
+
+        /* Efek tekan untuk logo */
+        .nav-logo:active {
+            transform: scale(0.85);
         }
 
         .nav-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 0.5rem;
+            padding-right: 8px;
         }
 
         .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.9rem;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 30px; /* Lekukan di tombol overlay */
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .nav-links a:hover {
             color: var(--text-main);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Efek tekan untuk menu nav */
+        .nav-links a:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         /* Main Content Layout */
         .main-content {
-            flex: 1;
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 120px 2rem 4rem 2rem; /* Jarak atas disesuaikan dengan navbar */
             display: flex;
             flex-direction: column;
             gap: 5rem;
@@ -128,12 +149,12 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
+            padding: 6px 14px;
+            border-radius: 30px;
             border: 1px solid rgba(139, 92, 246, 0.3);
             background: rgba(139, 92, 246, 0.1);
             color: #c4b5fd;
@@ -166,7 +187,7 @@
             margin-bottom: 2.5rem;
         }
 
-        /* Modern Interactive Buttons */
+        /* Buttons */
         .actions {
             display: flex;
             gap: 1rem;
@@ -174,16 +195,16 @@
         }
 
         .btn {
-            padding: 0.85rem 1.5rem;
-            border-radius: 12px;
+            padding: 0.9rem 1.6rem;
+            border-radius: 14px;
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .btn-primary {
@@ -193,8 +214,12 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.95); /* Animasi klik */
         }
 
         .btn-outline {
@@ -206,9 +231,14 @@
         .btn-outline:hover {
             background: var(--surface);
             border-color: var(--text-muted);
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline:active {
+            transform: scale(0.95);
         }
 
-        /* Line Box (Animated Cards) */
+        /* Feature Grid & Line Box */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -218,20 +248,19 @@
         .line-box {
             position: relative;
             background: var(--surface);
-            border-radius: 16px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 2.2rem;
             overflow: hidden;
             z-index: 1;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
         }
 
-        /* The magical animated border line effect */
         .line-box::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 16px;
-            padding: 1.5px; /* Border thickness */
+            border-radius: 20px;
+            padding: 1.5px;
             background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -241,7 +270,7 @@
         }
 
         .line-box:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
             background: var(--surface-hover);
         }
 
@@ -250,45 +279,71 @@
         }
 
         .line-box h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: 0.75rem;
             letter-spacing: -0.5px;
         }
 
         .line-box p {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        /* Minimalist Pill Tags for Apps */
-        .pill-group {
+        /* App Supported Links (Clickable with Icons) */
+        .app-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             margin-top: 1.5rem;
         }
 
-        .pill {
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.8rem;
+            padding: 6px 16px 6px 6px;
+            border-radius: 30px; /* Lekukan bulat modern */
+            text-decoration: none;
             color: #a3a3a3;
-            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .line-box:hover .pill {
+        .app-btn img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fff; /* Biar icon terang keliatan */
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .line-box:hover .app-btn {
             border-color: rgba(255, 255, 255, 0.15);
-            color: var(--text-main);
         }
 
-        /* Section Reveal Animation */
+        .app-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: var(--text-main);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Animasi pencet tombol app */
+        .app-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* Smooth Reveal Animation for Scroll */
         .reveal {
             opacity: 0;
             transform: translateY(40px) scale(0.98);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .reveal.active {
@@ -296,7 +351,7 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Toast */
+        /* Toast Popup */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -307,10 +362,11 @@
             padding: 12px 24px;
             border-radius: 30px;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 1000;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
         }
 
         .toast.show {
@@ -319,34 +375,13 @@
         }
 
         /* Keyframes */
+        @keyframes slideDownFade {
+            0% { opacity: 0; transform: translate(-50%, -30px); }
+            100% { opacity: 1; transform: translate(-50%, 0); }
+        }
         @keyframes slideUpFade {
             0% { opacity: 0; transform: translateY(30px); }
             100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Desktop Sidebar Layout Adaptation */
-        @media (min-width: 1024px) {
-            body {
-                flex-direction: row;
-            }
-            .sidebar {
-                width: 260px;
-                height: 100vh;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                border-bottom: none;
-                border-right: 1px solid var(--border);
-            }
-            .nav-links {
-                flex-direction: column;
-                margin-top: 3rem;
-                gap: 1.25rem;
-            }
-            .main-content {
-                padding: 6rem 4rem;
-                max-width: 1100px;
-            }
         }
     </style>
 </head>
@@ -355,18 +390,16 @@
     <div class="bg-grid"></div>
     <div class="ambient"></div>
 
-    <!-- Responsive Sidebar / Header -->
-    <aside class="sidebar">
-        <a href="#" class="brand">
+    <!-- Floating Minimalist Overlay Navbar -->
+    <nav class="navbar-container">
+        <a href="#home" class="nav-logo">
             <img src="IMG_6762.jpeg" alt="Logo">
-            GHN Library
         </a>
-        <nav class="nav-links">
-            <a href="#home">Overview</a>
+        <div class="nav-links">
             <a href="#features">Features</a>
             <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank">GitHub</a>
-        </nav>
-    </aside>
+        </div>
+    </nav>
 
     <!-- Main Content Area -->
     <main class="main-content">
@@ -392,16 +425,33 @@
         <section class="reveal" id="features">
             <div class="grid">
                 
-                <!-- Line Box Card 1 -->
+                <!-- Line Box Card 1 (Apps with Icons) -->
                 <div class="line-box">
                     <h3>Universal Support</h3>
-                    <p>Copy the repository link once and use it anywhere. Fully parsed and structured for modern signers.</p>
-                    <div class="pill-group">
-                        <span class="pill">ESign</span>
-                        <span class="pill">Scarlet</span>
-                        <span class="pill">Feather</span>
-                        <span class="pill">AltStore</span>
-                        <span class="pill">SideStore</span>
+                    <p>Click below to download or visit the official page of our supported signers. Fully parsed and structured.</p>
+                    
+                    <!-- App Links otomatis ngambil favicon logo dari website resmi mereka -->
+                    <div class="app-links">
+                        <a href="https://esign.yyyue.xyz/" target="_blank" class="app-btn">
+                            <img src="https://www.google.com/s2/favicons?domain=esign.yyyue.xyz&sz=64" alt="ESign">
+                            <span>ESign</span>
+                        </a>
+                        <a href="https://usescarlet.com/" target="_blank" class="app-btn">
+                            <img src="https://www.google.com/s2/favicons?domain=usescarlet.com&sz=64" alt="Scarlet">
+                            <span>Scarlet</span>
+                        </a>
+                        <a href="https://sidestore.io/" target="_blank" class="app-btn">
+                            <img src="https://www.google.com/s2/favicons?domain=sidestore.io&sz=64" alt="SideStore">
+                            <span>SideStore</span>
+                        </a>
+                        <a href="https://altstore.io/" target="_blank" class="app-btn">
+                            <img src="https://www.google.com/s2/favicons?domain=altstore.io&sz=64" alt="AltStore">
+                            <span>AltStore</span>
+                        </a>
+                        <a href="https://github.com/khcrysalis/Feather" target="_blank" class="app-btn">
+                            <img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="Feather">
+                            <span>Feather</span>
+                        </a>
                     </div>
                 </div>
 
@@ -423,10 +473,10 @@
     </main>
 
     <!-- Toast Notification -->
-    <div class="toast" id="toastMsg">URL copied to clipboard</div>
+    <div class="toast" id="toastMsg">URL copied to clipboard! ✨</div>
 
     <script>
-        // Copy to Clipboard
+        // Copy to Clipboard Animation
         function copyURL() {
             navigator.clipboard.writeText("https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json");
             const toast = document.getElementById('toastMsg');
@@ -436,7 +486,7 @@
             }, 2500);
         }
 
-        // Smooth Scroll & Reveal Animation
+        // Buttery Smooth Scroll & Reveal Animation
         document.addEventListener("DOMContentLoaded", () => {
             const reveals = document.querySelectorAll(".reveal");
             const observer = new IntersectionObserver((entries) => {
@@ -445,7 +495,7 @@
                         entry.target.classList.add("active");
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.15 }); // 15% elemen masuk layar baru animasi jalan
 
             reveals.forEach(reveal => observer.observe(reveal));
         });
