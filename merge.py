@@ -46,6 +46,21 @@ urls = [
     "https://raw.githubusercontent.com/LukeZGD/LukeZGD.github.io/main/apps.json",
     "https://quarksources.github.io/quarksources.json",
     "https://raw.githubusercontent.com/CokePokes/CokePokes.github.io/master/apps.json"
+    "https://apps.nabzclan.vip/repos/altstore.php",
+    "https://driftywinds.github.io/repos/esign.json",
+    "https://dvntm0.github.io/AltStore/raw/refs/heads/main/esign.json",
+    "https://raw.githubusercontent.com/Omni-Development/The-Omni-Repository/refs/heads/main/app-repo.json",
+    "https://randomblock1.com/altstore/apps.json",
+    "https://tweakrain.pages.dev/ios/altstore.json",
+    "https://gbox.run/Public/Source.json",
+    "https://raw.githubusercontent.com/Dan1elTheMan1el/Dan1elTheMan1el.github.io/main/repo.json",
+    "https://raw.githubusercontent.com/ichitaso/ichitaso.github.io/master/altstore.json",
+    "https://raw.githubusercontent.com/julioverne/julioverne.github.io/master/altstore.json",
+    "https://raw.githubusercontent.com/yandevelop/yandevelop.github.io/main/apps.json",
+    "https://ipa.aspy.dev/repo.json",
+    "https://alt.getutm.app",
+    "https://raw.githubusercontent.com/SpotC-Plus/SpotC-Plus.github.io/main/repo.json"
+
 ]
 
 merged_apps = []
