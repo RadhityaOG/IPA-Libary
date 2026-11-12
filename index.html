@@ -38,7 +38,7 @@
         body { color: var(--text-primary); overflow-x: hidden; -webkit-font-smoothing: antialiased; transition: color 0.4s ease; }
 
         /* ==========================================================================
-           APPLE-STYLE STICKY NAVBAR
+           APPLE-STYLE STICKY NAVBAR (MINIMALIST)
            ========================================================================== */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
@@ -52,13 +52,11 @@
             width: 100%; max-width: 980px; padding: 0 20px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-primary); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
-        .nav-logo img { width: 24px; height: 24px; border-radius: 50%; }
-        .nav-links { display: flex; gap: 16px; align-items: center; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 400; transition: color 0.2s; letter-spacing: 0.5px; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.5px; }
         .nav-links a:hover { color: var(--text-primary); }
         
-        .nav-tools { display: flex; gap: 8px; align-items: center; }
+        .nav-tools { display: flex; gap: 12px; align-items: center; }
         .icon-btn {
             background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border);
             width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
@@ -216,10 +214,6 @@
     <!-- STICKY NAVBAR -->
     <nav class="navbar">
         <div class="nav-content">
-            <a href="#home" class="nav-logo">
-                <img src="IMG_6762.jpeg" alt="Logo">
-                GHN
-            </a>
             <div class="nav-links">
                 <a href="#features" data-en="Features" data-id="Fitur">Features</a>
                 <a href="#install" data-en="Setup Guide" data-id="Cara Pakai">Setup Guide</a>
@@ -321,7 +315,7 @@
                 <div class="bento-desc" data-en="Always up-to-date apps." data-id="Aplikasi selalu diperbarui.">Always up-to-date apps.</div>
             </div>
 
-            <!-- Small Card 2 (UPDATED WITH CLICKABLE APP TAGS) -->
+            <!-- Small Card 2 (SUPPORTED APPS) -->
             <div class="bento-card reveal">
                 <div class="bento-icon" style="color: var(--accent); margin-bottom: 12px;">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -485,7 +479,7 @@
             if (!isOpen) el.classList.add('open');
         }
 
-        // --- SCROLL REVEAL & RUNNING COUNTER ---
+        // --- SCROLL REVEAL & RUNNING COUNTER (REPEATING ANIMATION) ---
         document.addEventListener("DOMContentLoaded", () => {
             const reveals = document.querySelectorAll(".reveal");
             const observer = new IntersectionObserver((entries) => {
@@ -493,6 +487,7 @@
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
                         
+                        // Counter animation (only runs once per element)
                         const counters = entry.target.querySelectorAll('.stat-counter');
                         counters.forEach(numEl => {
                             if (!numEl.classList.contains('counted')) {
@@ -512,13 +507,14 @@
                                 update();
                             }
                         });
+                    } else {
+                        // Remove active class when out of view to trigger animation again later
+                        entry.target.classList.remove("active");
                     }
                 });
-            }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+            }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-            reveals.forEach(reveal => {
-                if (!reveal.classList.contains('active')) observer.observe(reveal);
-            });
+            reveals.forEach(reveal => observer.observe(reveal));
         });
     </script>
 </body>
