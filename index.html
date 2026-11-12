@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GHN - IPA Library | iOS Sideloading Source</title>
+    <title>GHN - IPA Library | Ultimate iOS Sideloading Source</title>
     <meta name="description" content="Curated and auto-merged iOS IPA library compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.">
     <style>
         * {
@@ -11,79 +11,133 @@
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #080c14;
+            background-color: #030712;
             color: #f8fafc;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 1.2rem;
+            padding: 1.5rem 1rem;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Navbar Pill ala SideStore */
+        /* Animated Glowing Background Blobs */
+        .bg-glow {
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(59, 130, 246, 0.25));
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translateX(-50%) scale(0.9); opacity: 0.6; }
+            100% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+        }
+
+        /* Navbar Pill with Glassmorphism */
         .navbar {
             width: 100%;
-            max-width: 650px;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 680px;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 9999px;
             padding: 0.75rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
         .nav-logo {
             width: 32px;
             height: 32px;
             border-radius: 50%;
             object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
+
         .nav-links {
             display: flex;
-            gap: 1.2rem;
+            gap: 1.25rem;
         }
+
         .nav-links a {
             color: #94a3b8;
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover {
-            color: #ffffff;
+            transition: color 0.2s ease;
         }
 
-        /* Hero Section */
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        /* Hero Section with Float Animation */
         .hero {
-            max-width: 650px;
+            max-width: 680px;
             width: 100%;
             text-align: center;
             padding: 0 0.5rem;
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        .hero-logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.75rem;
+        }
+
         .hero-logo {
-            width: 96px;
-            height: 96px;
-            border-radius: 24px;
+            width: 105px;
+            height: 105px;
+            border-radius: 26px;
             object-fit: cover;
-            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.3);
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            animation: floatLogo 4s ease-in-out infinite;
         }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.75rem;
             font-weight: 800;
             margin-bottom: 0.75rem;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 30%, #a855f7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         p {
             color: #94a3b8;
             font-size: 1.05rem;
@@ -91,88 +145,140 @@
             line-height: 1.6;
         }
 
-        /* Action Buttons */
+        /* Interactive Action Buttons */
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
+            gap: 1rem;
             margin-bottom: 3.5rem;
         }
+
         .btn {
-            background-color: #7c3aed;
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
             color: white;
-            padding: 0.9rem 1.2rem;
-            border-radius: 16px;
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.35);
-        }
-        .btn:hover {
-            background-color: #6d28d9;
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background-color: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(12px);
-            color: #38bdf8;
-            border: 1px solid rgba(51, 65, 85, 0.8);
-            box-shadow: none;
-        }
-        .btn-secondary:hover {
-            background-color: rgba(51, 65, 85, 0.8);
-            color: #7dd3fc;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Section Title */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.5);
+            color: #7dd3fc;
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2);
+        }
+
+        /* Feature Cards Grid with Stagger & Hover Tilt */
         .section-title {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 700;
             margin-bottom: 1.25rem;
             color: #ffffff;
             text-align: left;
-        }
-
-        /* Grid Cards ala SideStore */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            width: 100%;
-            margin-bottom: 3.5rem;
-        }
-        .card {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: left;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .card:hover {
-            border-color: rgba(124, 58, 237, 0.4);
-            transform: translateY(-2px);
-        }
-        .card h3 {
-            font-size: 1.1rem;
-            color: #ffffff;
-            margin-bottom: 0.4rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.1rem;
+            width: 100%;
+            margin-bottom: 3.5rem;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 22px;
+            padding: 1.6rem;
+            text-align: left;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .card:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(124, 58, 237, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .card p {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #94a3b8;
             margin-bottom: 0;
+        }
+
+        /* Toast Notification for Copy */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            background: #7c3aed;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Footer */
@@ -182,36 +288,58 @@
             font-size: 0.8rem;
             color: #64748b;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             width: 100%;
-            max-width: 650px;
+            max-width: 680px;
+        }
+
+        /* Keyframes */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Glow Effect -->
+    <div class="bg-glow"></div>
+
     <!-- Navbar Pill -->
     <nav class="navbar">
-        <img src="IMG_6762.jpeg" alt="Logo" class="nav-logo">
+        <a href="#" class="nav-brand">
+            <img src="IMG_6762.jpeg" alt="Logo" class="nav-logo">
+            <span>GHN Lib</span>
+        </a>
         <div class="nav-links">
             <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank">GitHub</a>
-            <a href="#" onclick="copyURL(); return false;">Source URL</a>
+            <a href="#" onclick="copyURL(); return false;">Copy Link</a>
         </div>
     </nav>
 
     <!-- Hero Content -->
     <div class="hero">
-        <img src="IMG_6762.jpeg" alt="GHN Logo" class="hero-logo">
+        <div class="hero-logo-container">
+            <img src="IMG_6762.jpeg" alt="GHN Logo" class="hero-logo">
+        </div>
         <h1>GHN - IPA Library</h1>
         <p>Curated and auto-merged iOS IPA repository. Fully compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.</p>
         
         <div class="btn-group">
-            <a href="altstore://source?url=https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json" class="btn">Add to AltStore / SideStore</a>
-            <button onclick="copyURL()" class="btn btn-secondary" id="copyBtn">Copy Source URL</button>
+            <a href="altstore://source?url=https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json" class="btn">
+                <span>⚡ Add to AltStore / SideStore</span>
+            </a>
+            <button onclick="copyURL()" class="btn btn-secondary" id="copyBtn">
+                <span>📋 Copy Source URL</span>
+            </button>
         </div>
 
         <!-- Features Grid -->
-        <h2 class="section-title">Features & Repository</h2>
+        <h2 class="section-title">🚀 Repository Features</h2>
         <div class="grid">
             <div class="card">
                 <h3>⚡ 58+ Sources Merged</h3>
@@ -219,14 +347,17 @@
             </div>
             <div class="card">
                 <h3>🔄 24/7 Auto-Update</h3>
-                <p>Powered by GitHub Actions, ensuring your repository stays fresh and up-to-date automatically.</p>
+                <p>Powered by GitHub Actions & Python, ensuring your repository stays fresh and up-to-date automatically.</p>
             </div>
             <div class="card">
-                <h3>🛡️ Multi-Signer Ready</h3>
-                <p>Fully optimized for FlekSt0re, ESign, Feather, AltStore, and SideStore without hiccups.</p>
+                <h3>🛡️ Multi-Signer Optimized</h3>
+                <p>Fully compatible with FlekSt0re, ESign, Feather, AltStore, and SideStore without any parsing errors.</p>
             </div>
         </div>
     </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toastMsg">Source URL copied to clipboard! ✨</div>
 
     <!-- Footer -->
     <footer>
@@ -236,11 +367,10 @@
     <script>
         function copyURL() {
             navigator.clipboard.writeText("https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json");
-            const btn = document.getElementById('copyBtn');
-            const originalText = btn.textContent;
-            btn.textContent = "Copied to Clipboard!";
+            const toast = document.getElementById('toastMsg');
+            toast.classList.add('show');
             setTimeout(() => {
-                btn.textContent = originalText;
+                toast.classList.remove('show');
             }, 2000);
         }
     </script>
