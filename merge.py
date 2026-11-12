@@ -64,6 +64,7 @@ urls = [
 
 merged_apps = []
 seen_bundles = set()
+default_icon = "https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/IMG_6762.jpeg"
 
 for url in urls:
     try:
@@ -71,24 +72,39 @@ for url in urls:
         with urllib.request.urlopen(req, timeout=10) as response:
             data = json.loads(response.read().decode('utf-8'))
             apps = data.get('apps', [])
+            if not isinstance(apps, list):
+                continue
             for app in apps:
-                uid = f"{app.get('bundleIdentifier')}_{app.get('version')}"
-                if uid not in seen_bundles and app.get('downloadURL'):
-                    seen_bundles.add(uid)
-                    merged_apps.append(app)
-    except Exception as e:
-        print(f"Skip {url}: {e}")
+                if not isinstance(app, dict):
+                    continue
+                bundle_id = str(app.get('bundleIdentifier') or '').strip()
+                version = str(app.get('version') or '').strip()
+                download_url = str(app.get('downloadURL') or '').strip()
+                name = str(app.get('name') or '').strip()
 
-mega_repo = {
-    "name": "GHN - IPA Library",
-    "identifier": "com.ghn.ipalibrary",
-    "subtitle": "All-in-One Merged Repo",
-    "description": "Auto-merged IPA repository",
-    "iconURL": "https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/IMG_6762.jpeg",
-    "apps": merged_apps
-}
+                if not (bundle_id and version and name and download_url.startswith('http')):
+                    continue
+                if ' ' in download_url:
+                    continue
 
-with open("repo.json", "w", encoding="utf-8") as f:
-    json.dump(mega_repo, f, indent=2)
+                uid = f"{bundle_id}_{version}"
+                if uid in seen_bundles:
+                    continue
+                seen_bundles.add(uid)
 
-print(f"Total apps merged: {len(merged_apps)}")
+                icon_url = str(app.get('iconURL') or '').strip()
+                if not icon_url.startswith('http') or ' ' in icon_url:
+                    icon_url = default_icon
+
+                raw_size = app.get('size', 0)
+                try:
+                    size = int(float(raw_size)) if raw_size is not None else 0
+                except (ValueError, TypeError):
+                    size = 0
+
+                clean_app = {
+                    "name": name,
+                    "bundleIdentifier": bundle_id,
+                    "developerName": str(app.get('developerName') or 'Unknown').strip() or 'Unknown',
+                    "version": version,
+                    "versionDate": str(app.get('versionDate') or '2025-01-
