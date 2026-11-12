@@ -15,4 +15,4 @@ Repositori gabungan (*All-in-one*) untuk berbagai aplikasi iOS. Repositori ini d
 Salin URL di bawah ini dan tambahkan ke dalam aplikasi AltStore atau SideStore di perangkat kamu:
 
 ```text
-[https://raw.githubusercontent.com/RadhityaOG/ghn-ipa-repo/main/repo.json](https://raw.githubusercontent.com/RadhityaOG/ghn-ipa-repo/main/repo.json)
+https://raw.githubusercontent.com/RadhityaOG/weghn-ipa-repo/main/repo.json
