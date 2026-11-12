@@ -63,48 +63,82 @@ urls = [
 ]
 
 merged_apps = []
-seen_bundles = set()
-default_icon = "https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/IMG_6762.jpeg"
+seen = set()
+repo_base = "https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main"
+default_icon = f"{repo_base}/IMG_6762.jpeg"
 
 for url in urls:
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=10) as response:
-            data = json.loads(response.read().decode('utf-8'))
+        with urllib.request.urlopen(req, timeout=10) as res:
+            data = json.loads(res.read().decode('utf-8'))
             apps = data.get('apps', [])
             if not isinstance(apps, list):
                 continue
             for app in apps:
                 if not isinstance(app, dict):
                     continue
-                bundle_id = str(app.get('bundleIdentifier') or '').strip()
-                version = str(app.get('version') or '').strip()
-                download_url = str(app.get('downloadURL') or '').strip()
+                bid = str(app.get('bundleIdentifier') or '').strip()
+                ver = str(app.get('version') or '').strip()
+                dl = str(app.get('downloadURL') or '').strip()
                 name = str(app.get('name') or '').strip()
 
-                if not (bundle_id and version and name and download_url.startswith('http')):
+                if not (bid and ver and name and dl.startswith('http')):
                     continue
-                if ' ' in download_url:
+                if ' ' in dl:
                     continue
 
-                uid = f"{bundle_id}_{version}"
-                if uid in seen_bundles:
+                uid = f"{bid}_{ver}"
+                if uid in seen:
                     continue
-                seen_bundles.add(uid)
+                seen.add(uid)
 
-                icon_url = str(app.get('iconURL') or '').strip()
-                if not icon_url.startswith('http') or ' ' in icon_url:
-                    icon_url = default_icon
+                icon = str(app.get('iconURL') or '').strip()
+                if not icon.startswith('http') or ' ' in icon:
+                    icon = default_icon
+
+                dev = str(app.get('developerName') or '').strip()
+                if not dev:
+                    dev = "Unknown"
+
+                vdate = str(app.get('versionDate') or '').strip()
+                if not vdate:
+                    vdate = "2025-01-01"
+
+                desc = str(app.get('localizedDescription') or '').strip()
+                if not desc:
+                    desc = "No description."
 
                 raw_size = app.get('size', 0)
                 try:
-                    size = int(float(raw_size)) if raw_size is not None else 0
-                except (ValueError, TypeError):
+                    size = int(float(raw_size)) if raw_size else 0
+                except Exception:
                     size = 0
 
-                clean_app = {
+                merged_apps.append({
                     "name": name,
-                    "bundleIdentifier": bundle_id,
-                    "developerName": str(app.get('developerName') or 'Unknown').strip() or 'Unknown',
-                    "version": version,
-                    "versionDate": str(app.get('versionDate') or '2025-01-
+                    "bundleIdentifier": bid,
+                    "developerName": dev,
+                    "version": ver,
+                    "versionDate": vdate,
+                    "downloadURL": dl,
+                    "localizedDescription": desc,
+                    "iconURL": icon,
+                    "size": size
+                })
+    except Exception as e:
+        print(f"Skip {url}: {e}")
+
+mega_repo = {
+    "name": "GHN - IPA Library",
+    "identifier": "com.ghn.ipalibrary",
+    "subtitle": "All-in-One Merged Repo",
+    "description": "Auto-merged IPA repository",
+    "iconURL": default_icon,
+    "apps": merged_apps
+}
+
+with open("repo.json", "w", encoding="utf-8") as f:
+    json.dump(mega_repo, f, separators=(',', ':'))
+
+print(f"Total apps merged: {len(merged_apps)}")
