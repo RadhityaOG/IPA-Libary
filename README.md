@@ -11,11 +11,6 @@
 
 An all-in-one aggregated repository for iOS apps, games, and tweaks. Configured to be fully compatible with standard **AltSources** and **ESign** formats.
 
-Website Link
-```text
-(https://radhityaog.github.io/IPA-Libary/)
-```
-
 ---
 
 ###  How to Use (Sideloading)
