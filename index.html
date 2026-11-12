@@ -11,6 +11,7 @@
            ========================================================================== */
         :root[data-theme="dark"] {
             --bg: #000000;
+            --nav-bg: rgba(0, 0, 0, 0.75);
             --surface: #111111;
             --surface-elevated: #1c1c1e;
             --text-primary: #f5f5f7;
@@ -22,6 +23,7 @@
 
         :root[data-theme="light"] {
             --bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.75);
             --surface: #f5f5f7;
             --surface-elevated: #e5e5ea;
             --text-primary: #1d1d1f;
@@ -40,7 +42,7 @@
            ========================================================================== */
         .navbar {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-            background: var(--bg); background-color: var(--bg);
+            background: var(--nav-bg);
             backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
             border-bottom: 1px solid var(--border);
             display: flex; justify-content: center; height: 56px;
@@ -60,7 +62,7 @@
         .icon-btn {
             background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border);
             width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; font-size: 13px; font-weight: 600; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
+            cursor: pointer; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
         }
         .icon-btn:hover { border-color: var(--border-hover); }
         .icon-btn:active { transform: scale(0.85); }
@@ -123,7 +125,6 @@
         .card-wide { grid-column: span 2; }
         .card-tall { grid-row: span 2; }
 
-        .bento-icon { font-size: 32px; margin-bottom: 20px; }
         .bento-stat { font-size: 44px; font-weight: 700; letter-spacing: -1px; margin-bottom: 8px; }
         .bento-title { font-size: 19px; font-weight: 600; margin-bottom: 10px; line-height: 1.2; }
         .bento-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
@@ -210,8 +211,20 @@
                 <a href="#faq" data-en="FAQ" data-id="FAQ">FAQ</a>
             </div>
             <div class="nav-tools">
-                <button class="icon-btn" onclick="toggleLang()" id="langToggle" title="Ganti Bahasa">ID</button>
-                <button class="icon-btn" onclick="toggleTheme()" id="themeToggle" title="Ganti Tema">☀️</button>
+                <button class="icon-btn" onclick="toggleLang()" id="langToggle" title="Ganti Bahasa" style="font-size: 13px; font-weight: 600;">ID</button>
+                <button class="icon-btn" onclick="toggleTheme()" id="themeToggle" title="Ganti Tema">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
             </div>
         </div>
     </nav>
@@ -269,7 +282,12 @@
                         Instead of adding dozens of separate repository links into your signer app, you only need to paste our single master URL to access everything.
                     </div>
                 </div>
-                <div class="bento-icon" style="margin-top: 24px; text-align: right;">🔗</div>
+                <div class="bento-icon" style="margin-top: 24px; text-align: right; color: var(--text-secondary);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                </div>
             </div>
 
             <!-- Tall Card -->
@@ -290,7 +308,11 @@
 
             <!-- Small Card 2 -->
             <div class="bento-card reveal">
-                <div class="bento-icon">⚡</div>
+                <div class="bento-icon" style="color: var(--accent); margin-bottom: 20px;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
                 <div class="bento-title" data-en="Universal Support" data-id="Kompatibilitas Universal">Universal Support</div>
                 <div class="bento-desc" data-en="Works on ESign, Scarlet, AltStore, Feather, etc." data-id="Berfungsi di ESign, Scarlet, AltStore, Feather, dll.">Works on ESign, Scarlet, AltStore, Feather, etc.</div>
             </div>
@@ -392,12 +414,15 @@
     <!-- SCRIPTS -->
     <script>
         // --- THEME TOGGLE SYSTEM ---
+        const iconSun = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+        const iconMoon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
-            document.getElementById('themeToggle').innerText = newTheme === 'dark' ? '☀️' : '🌙';
+            document.getElementById('themeToggle').innerHTML = newTheme === 'dark' ? iconSun : iconMoon;
         }
 
         // --- TRANSLATION SYSTEM ---
@@ -414,6 +439,7 @@
         function copyURL() {
             navigator.clipboard.writeText("https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json");
             const toast = document.getElementById('toastMsg');
+            toast.innerText = toast.getAttribute('data-' + currentLang);
             toast.classList.add('show');
             setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
