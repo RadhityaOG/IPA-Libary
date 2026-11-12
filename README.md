@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/IMG_6762.jpeg" alt="GHN Logo" width="100" height="100" style="border-radius: 22px;">
-  <h1>📦 GHN - IPA Library (AltSources)</h1>
+  <h1> GHN - IPA Library (AltSources)</h1>
 
   ![AltStore Ready](https://img.shields.io/badge/AltStore-Ready-blue?style=flat-square)
   ![Python](https://img.shields.io/badge/Script-Python%203-yellow?style=flat-square)
