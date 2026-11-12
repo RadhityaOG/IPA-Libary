@@ -3,376 +3,452 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GHN - IPA Library | Ultimate iOS Sideloading Source</title>
-    <meta name="description" content="Curated and auto-merged iOS IPA library compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.">
+    <title>GHN | Universal IPA Library</title>
+    <meta name="description" content="Minimalist, auto-merged iOS IPA repository for ESign, Scarlet, Feather, and more.">
     <style>
+        :root {
+            --bg-color: #050505;
+            --surface: #121212;
+            --surface-hover: #1a1a1a;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #8b5cf6;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+        }
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #030712;
-            color: #f8fafc;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             display: flex;
             flex-direction: column;
-            align-items: center;
             min-height: 100vh;
-            padding: 1.5rem 1rem;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Animated Glowing Background Blobs */
-        .bg-glow {
-            position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.25), rgba(59, 130, 246, 0.25));
-            filter: blur(100px);
-            border-radius: 50%;
+        /* Subtle animated background grid */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* Glowing ambient light */
+        .ambient {
+            position: fixed;
+            top: -20vh; right: -10vw;
+            width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
             z-index: -1;
-            animation: pulseGlow 8s ease-in-out infinite alternate;
+            border-radius: 50%;
+            animation: breathe 10s ease-in-out infinite alternate;
         }
 
-        @keyframes pulseGlow {
-            0% { transform: translateX(-50%) scale(0.9); opacity: 0.6; }
-            100% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+        @keyframes breathe {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+            100% { transform: scale(1.2) translate(-20px, 20px); opacity: 1; }
         }
 
-        /* Navbar Pill with Glassmorphism */
-        .navbar {
+        /* Sidebar / Header Navigation */
+        .sidebar {
             width: 100%;
-            max-width: 680px;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 9999px;
-            padding: 0.75rem 1.5rem;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom: 1px solid var(--border);
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .nav-brand {
+        .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
         }
 
-        .nav-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+        .brand img {
+            width: 36px; height: 36px;
+            border-radius: 10px;
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border);
         }
 
         .nav-links {
             display: flex;
-            gap: 1.25rem;
+            gap: 1.5rem;
         }
 
         .nav-links a {
-            color: #94a3b8;
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: color 0.2s ease;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: #38bdf8;
+            color: var(--text-main);
         }
 
-        /* Hero Section with Float Animation */
-        .hero {
-            max-width: 680px;
+        /* Main Content Layout */
+        .main-content {
+            flex: 1;
             width: 100%;
-            text-align: center;
-            padding: 0 0.5rem;
-            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 5rem;
         }
 
-        .hero-logo-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1.75rem;
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .hero-logo {
-            width: 105px;
-            height: 105px;
-            border-radius: 26px;
-            object-fit: cover;
-            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.4);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            animation: floatLogo 4s ease-in-out infinite;
-        }
-
-        @keyframes floatLogo {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.1);
+            color: #c4b5fd;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
         }
 
         h1 {
-            font-size: 2.75rem;
+            font-size: clamp(3rem, 6vw, 4.5rem);
             font-weight: 800;
-            margin-bottom: 0.75rem;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #ffffff 30%, #a855f7 100%);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p {
-            color: #94a3b8;
-            font-size: 1.05rem;
-            margin-bottom: 2.5rem;
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
             line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 2.5rem;
         }
 
-        /* Interactive Action Buttons */
-        .btn-group {
+        /* Modern Interactive Buttons */
+        .actions {
             display: flex;
-            flex-direction: column;
             gap: 1rem;
-            margin-bottom: 3.5rem;
+            flex-wrap: wrap;
         }
 
         .btn {
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-            color: white;
-            padding: 1rem 1.25rem;
-            border-radius: 18px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
+            padding: 0.85rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover::after {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(124, 58, 237, 0.6);
-        }
-
-        .btn-secondary {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(16px);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(56, 189, 248, 0.1);
-            border-color: rgba(56, 189, 248, 0.5);
-            color: #7dd3fc;
-            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2);
-        }
-
-        /* Feature Cards Grid with Stagger & Hover Tilt */
-        .section-title {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            color: #ffffff;
-            text-align: left;
-            display: flex;
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            transition: all 0.3s ease;
         }
 
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: var(--surface);
+            border-color: var(--text-muted);
+        }
+
+        /* Line Box (Animated Cards) */
         .grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.1rem;
-            width: 100%;
-            margin-bottom: 3.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
 
-        .card {
-            background: rgba(30, 41, 59, 0.35);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 22px;
-            padding: 1.6rem;
-            text-align: left;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .line-box {
             position: relative;
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .card:hover {
-            background: rgba(30, 41, 59, 0.6);
-            border-color: rgba(124, 58, 237, 0.5);
-            transform: translateY(-4px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        /* The magical animated border line effect */
+        .line-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 16px;
+            padding: 1.5px; /* Border thickness */
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
+            transition: background 0.4s ease;
         }
 
-        .card h3 {
-            font-size: 1.15rem;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .line-box:hover {
+            transform: translateY(-5px);
+            background: var(--surface-hover);
         }
 
-        .card p {
+        .line-box:hover::before {
+            background: linear-gradient(135deg, var(--accent), rgba(255,255,255,0.1));
+        }
+
+        .line-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .line-box p {
+            color: var(--text-muted);
             font-size: 0.9rem;
-            color: #94a3b8;
-            margin-bottom: 0;
+            line-height: 1.5;
         }
 
-        /* Toast Notification for Copy */
+        /* Minimalist Pill Tags for Apps */
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #a3a3a3;
+            transition: all 0.3s ease;
+        }
+
+        .line-box:hover .pill {
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+        }
+
+        /* Section Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 30px;
-            background: #7c3aed;
-            color: white;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-main);
+            color: var(--bg-color);
             padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 1000;
-            pointer-events: none;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
         }
 
-        /* Footer */
-        footer {
-            margin-top: auto;
-            padding: 2rem 0;
-            font-size: 0.8rem;
-            color: #64748b;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            width: 100%;
-            max-width: 680px;
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         /* Keyframes */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideUpFade {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        /* Desktop Sidebar Layout Adaptation */
+        @media (min-width: 1024px) {
+            body {
+                flex-direction: row;
+            }
+            .sidebar {
+                width: 260px;
+                height: 100vh;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                border-bottom: none;
+                border-right: 1px solid var(--border);
+            }
+            .nav-links {
+                flex-direction: column;
+                margin-top: 3rem;
+                gap: 1.25rem;
+            }
+            .main-content {
+                padding: 6rem 4rem;
+                max-width: 1100px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Glow Effect -->
-    <div class="bg-glow"></div>
+    <div class="bg-grid"></div>
+    <div class="ambient"></div>
 
-    <!-- Navbar Pill -->
-    <nav class="navbar">
-        <a href="#" class="nav-brand">
-            <img src="IMG_6762.jpeg" alt="Logo" class="nav-logo">
-            <span>GHN Lib</span>
+    <!-- Responsive Sidebar / Header -->
+    <aside class="sidebar">
+        <a href="#" class="brand">
+            <img src="IMG_6762.jpeg" alt="Logo">
+            GHN Library
         </a>
-        <div class="nav-links">
+        <nav class="nav-links">
+            <a href="#home">Overview</a>
+            <a href="#features">Features</a>
             <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank">GitHub</a>
-            <a href="#" onclick="copyURL(); return false;">Copy Link</a>
-        </div>
-    </nav>
+        </nav>
+    </aside>
 
-    <!-- Hero Content -->
-    <div class="hero">
-        <div class="hero-logo-container">
-            <img src="IMG_6762.jpeg" alt="GHN Logo" class="hero-logo">
-        </div>
-        <h1>GHN - IPA Library</h1>
-        <p>Curated and auto-merged iOS IPA repository. Fully compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.</p>
+    <!-- Main Content Area -->
+    <main class="main-content">
         
-        <div class="btn-group">
-            <a href="altstore://source?url=https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json" class="btn">
-                <span>⚡ Add to AltStore / SideStore</span>
-            </a>
-            <button onclick="copyURL()" class="btn btn-secondary" id="copyBtn">
-                <span>📋 Copy Source URL</span>
-            </button>
-        </div>
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="badge">Universal Source</div>
+            <h1><span>Sideloading,</span><br>reimagined.</h1>
+            <p class="subtitle">A minimalist, auto-updating iOS IPA repository designed to integrate flawlessly with your favorite sideloading apps.</p>
+            
+            <div class="actions">
+                <button class="btn btn-primary" onclick="copyURL()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Repository URL
+                </button>
+                <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank" class="btn btn-outline">
+                    View Source
+                </a>
+            </div>
+        </section>
 
-        <!-- Features Grid -->
-        <h2 class="section-title">🚀 Repository Features</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>⚡ 58+ Sources Merged</h3>
-                <p>Automated Python script combines multiple verified community app sources into one clean feed.</p>
+        <!-- Dynamic Grid Section -->
+        <section class="reveal" id="features">
+            <div class="grid">
+                
+                <!-- Line Box Card 1 -->
+                <div class="line-box">
+                    <h3>Universal Support</h3>
+                    <p>Copy the repository link once and use it anywhere. Fully parsed and structured for modern signers.</p>
+                    <div class="pill-group">
+                        <span class="pill">ESign</span>
+                        <span class="pill">Scarlet</span>
+                        <span class="pill">Feather</span>
+                        <span class="pill">AltStore</span>
+                        <span class="pill">SideStore</span>
+                    </div>
+                </div>
+
+                <!-- Line Box Card 2 -->
+                <div class="line-box">
+                    <h3>Automated Merging</h3>
+                    <p>Built with Python and GitHub Actions. Over 58+ trusted community sources automatically fetched and merged into a single clean feed every 24 hours.</p>
+                </div>
+
+                <!-- Line Box Card 3 -->
+                <div class="line-box">
+                    <h3>Zero Maintenance</h3>
+                    <p>Hosted entirely on GitHub Pages. No servers to manage, no downtimes, and guaranteed high-speed global delivery via CDN.</p>
+                </div>
+
             </div>
-            <div class="card">
-                <h3>🔄 24/7 Auto-Update</h3>
-                <p>Powered by GitHub Actions & Python, ensuring your repository stays fresh and up-to-date automatically.</p>
-            </div>
-            <div class="card">
-                <h3>🛡️ Multi-Signer Optimized</h3>
-                <p>Fully compatible with FlekSt0re, ESign, Feather, AltStore, and SideStore without any parsing errors.</p>
-            </div>
-        </div>
-    </div>
+        </section>
+
+    </main>
 
     <!-- Toast Notification -->
-    <div class="toast" id="toastMsg">Source URL copied to clipboard! ✨</div>
-
-    <!-- Footer -->
-    <footer>
-        Auto-updated 24/7 via GitHub Actions &bull; Built with passion by Ghan
-    </footer>
+    <div class="toast" id="toastMsg">URL copied to clipboard</div>
 
     <script>
+        // Copy to Clipboard
         function copyURL() {
             navigator.clipboard.writeText("https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json");
             const toast = document.getElementById('toastMsg');
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 2000);
+            }, 2500);
         }
+
+        // Smooth Scroll & Reveal Animation
+        document.addEventListener("DOMContentLoaded", () => {
+            const reveals = document.querySelectorAll(".reveal");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+        });
     </script>
 </body>
 </html>
