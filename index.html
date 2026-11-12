@@ -19,22 +19,24 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 1rem;
+            padding: 1.2rem;
+            overflow-x: hidden;
         }
+
         /* Navbar Pill ala SideStore */
         .navbar {
             width: 100%;
-            max-width: 600px;
-            background: rgba(15, 23, 42, 0.7);
+            max-width: 650px;
+            background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 9999px;
-            padding: 0.75rem 1.25rem;
+            padding: 0.75rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
         .nav-logo {
             width: 32px;
@@ -44,7 +46,7 @@
         }
         .nav-links {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         .nav-links a {
             color: #94a3b8;
@@ -59,7 +61,7 @@
 
         /* Hero Section */
         .hero {
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             text-align: center;
             padding: 0 0.5rem;
@@ -69,12 +71,12 @@
             height: 96px;
             border-radius: 24px;
             object-fit: cover;
-            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.25);
+            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.3);
             margin-bottom: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.12);
         }
         h1 {
-            font-size: 2.25rem;
+            font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 0.75rem;
             letter-spacing: -0.5px;
@@ -84,8 +86,8 @@
         }
         p {
             color: #94a3b8;
-            font-size: 1rem;
-            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
             line-height: 1.6;
         }
 
@@ -94,12 +96,12 @@
             display: flex;
             flex-direction: column;
             gap: 0.85rem;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
         .btn {
             background-color: #7c3aed;
             color: white;
-            padding: 0.85rem 1.2rem;
+            padding: 0.9rem 1.2rem;
             border-radius: 16px;
             text-decoration: none;
             font-weight: 600;
@@ -111,14 +113,14 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.35);
         }
         .btn:hover {
             background-color: #6d28d9;
             transform: translateY(-2px);
         }
         .btn-secondary {
-            background-color: rgba(30, 41, 59, 0.7);
+            background-color: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(12px);
             color: #38bdf8;
             border: 1px solid rgba(51, 65, 85, 0.8);
@@ -129,13 +131,22 @@
             color: #7dd3fc;
         }
 
-        /* Feature Cards Grid (Ala SideStore) */
+        /* Section Title */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        /* Grid Cards ala SideStore */
         .grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
             width: 100%;
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
         }
         .card {
             background: rgba(30, 41, 59, 0.4);
@@ -154,6 +165,9 @@
             font-size: 1.1rem;
             color: #ffffff;
             margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .card p {
             font-size: 0.85rem;
@@ -170,7 +184,7 @@
             text-align: center;
             border-top: 1px solid rgba(255, 255, 255, 0.04);
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
         }
     </style>
 </head>
@@ -189,14 +203,15 @@
     <div class="hero">
         <img src="IMG_6762.jpeg" alt="GHN Logo" class="hero-logo">
         <h1>GHN - IPA Library</h1>
-        <p>An all-in-one aggregated iOS IPA repository. Fully compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.</p>
+        <p>Curated and auto-merged iOS IPA repository. Fully compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.</p>
         
         <div class="btn-group">
             <a href="altstore://source?url=https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json" class="btn">Add to AltStore / SideStore</a>
             <button onclick="copyURL()" class="btn btn-secondary" id="copyBtn">Copy Source URL</button>
         </div>
 
-        <!-- Cards Section (Ala SideStore) -->
+        <!-- Features Grid -->
+        <h2 class="section-title">Features & Repository</h2>
         <div class="grid">
             <div class="card">
                 <h3>⚡ 58+ Sources Merged</h3>
@@ -204,7 +219,7 @@
             </div>
             <div class="card">
                 <h3>🔄 24/7 Auto-Update</h3>
-                <p>Powered by GitHub Actions, ensuring your repository stays fresh and up-to-date every 12 hours.</p>
+                <p>Powered by GitHub Actions, ensuring your repository stays fresh and up-to-date automatically.</p>
             </div>
             <div class="card">
                 <h3>🛡️ Multi-Signer Ready</h3>
