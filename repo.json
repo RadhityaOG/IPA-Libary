@@ -1,8 +1,9 @@
 {
-  "name": "Ghan Mega IPA Repo",
+  "name": "GHN - IPA Libary",
   "identifier": "com.ghan.megarepo",
   "subtitle": "All-in-One Merged Repo",
   "description": "Auto-merged IPA repository",
+  "iconURL": "https://raw.githubusercontent.com/RadhityaOG/ghn-ipa-repo/main/IMG_6762.jpeg",
   "apps": [
     {
       "name": "AltStore",
