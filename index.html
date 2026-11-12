@@ -42,7 +42,7 @@
            ========================================================================== */
         .navbar {
             position: fixed; 
-            top: 24px; 
+            top: 20px; 
             left: 50%; 
             transform: translateX(-50%);
             z-index: 100; 
@@ -53,40 +53,40 @@
             border: 1px solid var(--border);
             border-radius: 100px;
             display: flex; justify-content: center; align-items: center; 
-            height: 58px;
-            padding: 0 16px 0 20px;
+            height: 52px;
+            padding: 0 14px 0 18px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
             transition: background-color 0.4s ease, border-color 0.4s ease;
         }
         .nav-content {
-            display: flex; gap: 28px; align-items: center; justify-content: space-between; width: 100%;
+            display: flex; gap: 24px; align-items: center; justify-content: space-between; width: 100%;
         }
         .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-primary); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; }
-        .nav-logo img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+        .nav-logo img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; }
         
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.5px; }
+        .nav-links { display: flex; gap: 18px; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 12px; font-weight: 500; transition: color 0.2s; letter-spacing: 0.5px; }
         .nav-links a:hover { color: var(--text-primary); }
         
         .nav-tools { display: flex; gap: 8px; align-items: center; }
         .icon-btn {
             background: var(--surface-elevated); color: var(--text-primary); border: 1px solid var(--border);
-            width: 34px; height: 34px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s;
         }
         .icon-btn:hover { border-color: var(--border-hover); }
         .icon-btn:active { transform: scale(0.85); }
 
         /* ==========================================================================
-           HERO SECTION
+           HERO SECTION (SPACING FIXED)
            ========================================================================== */
-        .hero { padding: 180px 20px 60px; text-align: center; max-width: 1040px; margin: 0 auto; }
+        .hero { padding: 120px 20px 50px; text-align: center; max-width: 1040px; margin: 0 auto; }
         .hero-badge {
             display: inline-block; padding: 6px 14px; border: 1px solid var(--border); border-radius: 20px;
-            font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 24px; background: var(--surface);
+            font-size: 12px; font-weight: 500; color: var(--text-secondary); margin-bottom: 20px; background: var(--surface);
         }
-        .hero h1 { font-size: clamp(32px, 5.5vw, 60px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 20px; }
-        .hero p { font-size: clamp(15px, 1.8vw, 19px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.6; color: var(--text-secondary); max-width: 650px; margin: 0 auto 40px; }
+        .hero h1 { font-size: clamp(32px, 5.5vw, 60px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 16px; }
+        .hero p { font-size: clamp(15px, 1.8vw, 19px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.6; color: var(--text-secondary); max-width: 650px; margin: 0 auto 32px; }
         .hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
         
         .btn {
@@ -121,8 +121,8 @@
         /* ==========================================================================
            BENTO GRID
            ========================================================================== */
-        .section-wrapper { max-width: 980px; margin: 0 auto; padding: 60px 20px; }
-        .section-title { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 30px; text-align: center; }
+        .section-wrapper { max-width: 980px; margin: 0 auto; padding: 50px 20px; }
+        .section-title { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 24px; text-align: center; }
         
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .bento-card {
@@ -150,15 +150,15 @@
 
         /* Mobile specific spacing fixes */
         @media (max-width: 768px) {
-            .navbar { width: 92%; padding: 0 10px 0 16px; top: 16px; height: 52px; }
-            .nav-content { gap: 10px; }
-            .nav-links { gap: 12px; }
+            .navbar { width: 92%; padding: 0 8px 0 14px; top: 14px; height: 48px; }
+            .nav-content { gap: 8px; }
+            .nav-links { gap: 10px; }
             .nav-links a { font-size: 11px; }
-            .nav-logo span { display: none; } /* Sembunyikan teks GHN di HP kecil biar muat, logonya tetep ada */
+            .nav-logo span { display: none; }
             
-            .hero { padding: 140px 20px 40px; }
-            .section-wrapper { padding: 40px 20px; }
-            .section-title { margin-bottom: 24px; }
+            .hero { padding: 95px 16px 30px; }
+            .section-wrapper { padding: 35px 16px; }
+            .section-title { margin-bottom: 20px; }
             .bento-grid { grid-template-columns: 1fr; gap: 16px; }
             .card-wide, .card-tall { grid-column: span 1; grid-row: span 1; }
             .bento-card { padding: 24px; }
@@ -242,9 +242,9 @@
                 <a href="#faq" data-en="FAQ" data-id="FAQ">FAQ</a>
             </div>
             <div class="nav-tools">
-                <button class="icon-btn" onclick="toggleLang()" id="langToggle" title="Ganti Bahasa" style="font-size: 13px; font-weight: 600;">ID</button>
+                <button class="icon-btn" onclick="toggleLang()" id="langToggle" title="Ganti Bahasa" style="font-size: 12px; font-weight: 600;">ID</button>
                 <button class="icon-btn" onclick="toggleTheme()" id="themeToggle" title="Ganti Tema">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
                         <line x1="12" y1="1" x2="12" y2="3"></line>
                         <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -305,7 +305,21 @@
         <h2 class="section-title reveal" data-en="Designed for maximum convenience." data-id="Dirancang untuk kemudahan maksimal.">Designed for maximum convenience.</h2>
         
         <div class="bento-grid">
-            
+            <!-- Large Card -->
+            <div class="bento-card card-wide reveal">
+                <div>
+                    <div class="bento-title" data-en="No More Multiple Source Links" data-id="Tak Perlu Banyak Link Repositori Lagi">No More Multiple Source Links</div>
+                    <div class="bento-desc" data-en="Instead of adding dozens of separate repository links into your signer app, you only need to paste our single master URL to access everything." data-id="Alih-alih menambahkan puluhan link repo terpisah di aplikasi penandatangan Anda, kini Anda cukup menempelkan satu URL master kami untuk mengakses semuanya.">
+                        Instead of adding dozens of separate repository links into your signer app, you only need to paste our single master URL to access everything.
+                    </div>
+                </div>
+                <div class="bento-icon" style="margin-top: 24px; text-align: right; color: var(--text-secondary);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                </div>
+            </div>
 
             <!-- Tall Card -->
             <div class="bento-card card-tall reveal">
@@ -440,8 +454,8 @@
     <!-- SCRIPTS -->
     <script>
         // --- THEME TOGGLE SYSTEM ---
-        const iconSun = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
-        const iconMoon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        const iconSun = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+        const iconMoon = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
 
         function toggleTheme() {
             const html = document.documentElement;
