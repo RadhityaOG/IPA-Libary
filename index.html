@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHN - IPA Library | iOS Sideloading Source</title>
+    <meta name="description" content="Curated and auto-merged iOS IPA library compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0b0f19;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .logo {
+            width: 88px;
+            height: 88px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        }
+        .btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background-color: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #334155;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            background-color: #334155;
+            color: #7dd3fc;
+        }
+        .btn-github {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            box-shadow: none;
+        }
+        .btn-github:hover {
+            background-color: #1e293b;
+            color: #ffffff;
+        }
+        footer {
+            margin-top: 2.5rem;
+            font-size: 0.75rem;
+            color: #64748b;
+            letter-spacing: 0.3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="IMG_6762.jpeg" alt="GHN Logo" class="logo">
+        <h1>GHN - IPA Library</h1>
+        <p>An all-in-one aggregated iOS IPA repository. Fully compatible with FlekSt0re, ESign, AltStore, SideStore, and Feather.</p>
+        
+        <div class="btn-group">
+            <a href="altstore://source?url=https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json" class="btn">Add to AltStore / SideStore</a>
+            <button onclick="copyURL()" class="btn btn-secondary" id="copyBtn">Copy Source URL</button>
+            <a href="https://github.com/RadhityaOG/IPA-Libary" target="_blank" class="btn btn-github">View on GitHub</a>
+        </div>
+    </div>
+
+    <footer>
+        Auto-updated 24/7 via GitHub Actions &bull; Built by Ghan
+    </footer>
+
+    <script>
+        function copyURL() {
+            navigator.clipboard.writeText("https://raw.githubusercontent.com/RadhityaOG/IPA-Libary/main/repo.json");
+            const btn = document.getElementById('copyBtn');
+            btn.textContent = "Copied to Clipboard!";
+            setTimeout(() => {
+                btn.textContent = "Copy Source URL";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
