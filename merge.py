@@ -58,7 +58,6 @@ for url in urls:
             data = json.loads(response.read().decode('utf-8'))
             apps = data.get('apps', [])
             for app in apps:
-                # Filter biar gak duplikat berdasarkan bundleIdentifier + version
                 uid = f"{app.get('bundleIdentifier')}_{app.get('version')}"
                 if uid not in seen_bundles and app.get('downloadURL'):
                     seen_bundles.add(uid)
@@ -67,10 +66,11 @@ for url in urls:
         print(f"Skip {url}: {e}")
 
 mega_repo = {
-    "name": "Ghan Mega IPA Repo",
+    "name": "GHN - IPA Libary",
     "identifier": "com.ghan.megarepo",
     "subtitle": "All-in-One Merged Repo",
     "description": "Auto-merged IPA repository",
+    "iconURL": "https://raw.githubusercontent.com/RadhityaOG/ghn-ipa-repo/main/IMG_6762.jpeg",
     "apps": merged_apps
 }
 
